@@ -1,52 +1,80 @@
+import { OnboardingActions } from '@/components/onboarding/onboarding-actions';
+import { Container, FormInput, Spacer, Text } from '@/components/ui';
 import {
-	Button,
-	Container,
-	FormInput,
-	IconButton,
-	Spacer,
-	Text,
-} from '@/components/ui';
-import { useNavigation } from 'expo-router';
-import {
-	type FieldValues,
-	type UseFormHandleSubmit,
-	useForm,
-} from 'react-hook-form';
+	type CreateAccountSchema,
+	createAccountSchema,
+} from '@/lib/schemas/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 export default function CreateAccount() {
-	const { control } = useForm();
+	const { control, handleSubmit } = useForm<CreateAccountSchema>({
+		resolver: zodResolver(createAccountSchema),
+		defaultValues: {
+			confirmPassword: '',
+			email: '',
+			password: '',
+		},
+	});
+
+	const { push } = useRouter();
+
+	const onSubmit: SubmitHandler<CreateAccountSchema> = data => {
+		push('/(auth)/(onboarding)/account-created');
+	};
 
 	return (
-		<Container className="h-full">
-			<Text variant="title/large">Create account</Text>
+		<>
+			<KeyboardAwareScrollView
+				showsVerticalScrollIndicator={false}
+				overScrollMode="never"
+				keyboardShouldPersistTaps="always"
+				keyboardDismissMode="none"
+				bottomOffset={80}
+			>
+				<Container className="h-full">
+					<Text variant="title/large">Create account</Text>
 
-			<Text variant="title/medium" className="mt-8 mb-6">
-				Almost done! Create your account.
-			</Text>
+					<Text variant="title/medium" className="mt-8 mb-6">
+						Almost done! Create your account.
+					</Text>
 
-			<View className="flex gap-4">
-				<FormInput
-					label="Email address"
-					placeholder="Enter your email"
-					control={control}
-					name="fullName"
-				/>
-				<FormInput
-					label="Password"
-					placeholder="Enter your password"
-					control={control}
-					name="fullName"
-				/>
-				<FormInput
-					label="Confirm password"
-					placeholder="Enter your password again"
-					control={control}
-					name="fullName"
-				/>
-			</View>
+					<View className="flex gap-4">
+						<FormInput
+							label="Email address"
+							placeholder="Enter your email"
+							control={control}
+							inputMode="email"
+							keyboardType="email-address"
+							name="email"
+						/>
+						<FormInput
+							label="Password"
+							placeholder="Enter your password"
+							control={control}
+							inputMode="text"
+							keyboardType="visible-password"
+							secureTextEntry
+							name="password"
+						/>
+						<FormInput
+							label="Confirm password"
+							placeholder="Enter your password again"
+							control={control}
+							name="confirmPassword"
+							secureTextEntry
+							keyboardType="visible-password"
+							inputMode="text"
+						/>
+					</View>
 
-			<Spacer />
-		</Container>
+					<Spacer />
+				</Container>
+			</KeyboardAwareScrollView>
+			<OnboardingActions onSubmit={handleSubmit(onSubmit)} />
+		</>
 	);
 }

@@ -6,6 +6,7 @@ import {
 	FormRadioCardGroup,
 	Text,
 } from '@/components/ui';
+import { FormNumberInput } from '@/components/ui/form/form-number-input';
 import { useFormNavigation } from '@/hooks';
 import { type WelcomeSchema, welcomeSchema } from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
@@ -86,11 +87,10 @@ export default function Onboarding() {
 						</View>
 					</FormRadioCardGroup>
 
-					<FormInput
+					<FormNumberInput
 						label="How old are you?"
 						placeholder="Enter your age"
 						control={control}
-						inputMode="numeric"
 						name="age"
 						maxLength={2}
 						{...register(true)}

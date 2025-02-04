@@ -1,5 +1,6 @@
 import { OnboardingActions } from '@/components/onboarding/onboarding-actions';
-import { Container, FormInput, Text } from '@/components/ui';
+import { Container, Text } from '@/components/ui';
+import { FormNumberInput } from '@/components/ui/form/form-number-input';
 import { useFormNavigation } from '@/hooks';
 import type { YouSchema } from '@/lib/schemas/auth';
 import {
@@ -61,30 +62,29 @@ export default function You() {
 					</Text>
 
 					<View className="flex gap-4">
-						<FormInput
+						<FormNumberInput
 							label="How tall are you?"
 							placeholder="Enter your height"
 							control={control}
 							name="height"
-							inputMode="numeric"
+							maxLength={3}
 							{...register()}
 						/>
-						<FormInput
+						<FormNumberInput
 							label="How much do you weigh?"
 							placeholder="Enter your weight"
 							control={control}
 							name="weight"
-							inputMode="numeric"
+							maxLength={3}
 							{...register()}
 						/>
 						{goal !== 'maintain' && (
-							<FormInput
+							<FormNumberInput
 								label="What's your goal weight?"
 								placeholder="Enter your goal weight"
 								control={control}
 								name="goalWeight"
-								keyboardType="numeric"
-								inputMode="numeric"
+								maxLength={3}
 								{...register(true)}
 							/>
 						)}

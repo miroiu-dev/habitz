@@ -6,10 +6,6 @@ export function getMinimumWeight(height: number) {
 	return Math.round(18.5 * height * height);
 }
 
-export function getMaximumWeight(height: number) {
-	return Math.round(24.9 * height * height);
-}
-
 export function isUnderweight(bmi: number) {
 	return bmi < 18.5;
 }

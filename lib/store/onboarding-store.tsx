@@ -24,15 +24,15 @@ type OnboardingActions = {
 
 export const useOnboardingStore = create<OnboardingData & OnboardingActions>(
 	set => ({
-		age: 0,
+		age: Number.NaN,
 		activityLevel: 'active',
 		fullName: '',
 		gender: 'male',
 		goal: 'maintain',
-		goalWeight: 0,
-		height: 0,
+		goalWeight: Number.NaN,
+		height: Number.NaN,
 		weeklyGoal: 0.25,
-		weight: 0,
+		weight: Number.NaN,
 		updateWelcomeData: data => set(data),
 		updateActivityLevel: data => set(data),
 		updateGoal: data => set(data),

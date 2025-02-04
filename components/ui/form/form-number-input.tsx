@@ -5,15 +5,19 @@ import {
 	useController,
 } from 'react-hook-form';
 import type { TextInput, TextInputProps } from 'react-native';
-import { Input } from '../input';
+import { NumberInput, type NumberInputProps } from '../number-input';
 import { FormRow } from './form-row';
 
-type FormInputProps<TFieldValues extends FieldValues = FieldValues> = {
+type FormNumberInputProps<TFieldValues extends FieldValues = FieldValues> = {
 	label?: string;
 } & UseControllerProps<TFieldValues> &
-	Omit<TextInputProps, 'value' | 'onChangeText'>;
+	Omit<
+		TextInputProps,
+		'value' | 'onChangeText' | 'keyboardType' | 'inputMode'
+	> &
+	NumberInputProps;
 
-function FormInputInner<TFieldValues extends FieldValues = FieldValues>(
+function FormNumberInputInner<TFieldValues extends FieldValues = FieldValues>(
 	{
 		label,
 		control,
@@ -23,7 +27,7 @@ function FormInputInner<TFieldValues extends FieldValues = FieldValues>(
 		rules,
 		shouldUnregister,
 		...rest
-	}: FormInputProps<TFieldValues>,
+	}: FormNumberInputProps<TFieldValues>,
 	ref: ForwardedRef<TextInput>
 ) {
 	const {
@@ -40,11 +44,11 @@ function FormInputInner<TFieldValues extends FieldValues = FieldValues>(
 
 	return (
 		<FormRow label={label} invalid={invalid} error={error?.message}>
-			<Input
+			<NumberInput
 				{...rest}
+				onChangeText={onChange}
 				ref={ref}
 				onBlur={onBlur}
-				onChangeText={text => onChange(text)}
 				value={value}
 				invalid={invalid}
 			/>
@@ -52,10 +56,10 @@ function FormInputInner<TFieldValues extends FieldValues = FieldValues>(
 	);
 }
 
-export const FormInput = forwardRef(FormInputInner) as <
+export const FormNumberInput = forwardRef(FormNumberInputInner) as <
 	TFieldValues extends FieldValues = FieldValues
 >(
-	props: FormInputProps<TFieldValues> & {
+	props: FormNumberInputProps<TFieldValues> & {
 		ref?: ForwardedRef<TextInput>;
 	}
-) => ReturnType<typeof FormInputInner>;
+) => ReturnType<typeof FormNumberInputInner>;

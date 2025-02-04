@@ -1,6 +1,5 @@
 import {
 	getBodyMassIndex,
-	getMaximumWeight,
 	getMinimumWeight,
 	isUnderweight,
 } from '@/lib/health';
@@ -17,6 +16,10 @@ export const youSchema = z.object({
 		.max(254, 'Please enter an accurate height.'),
 	goalWeight: z.coerce
 		.number({ message: 'Please enter an estimated goal weight.' })
+		.max(
+			454,
+			'Your goal weight must be between your current weight and 454kg.'
+		)
 		.optional(),
 });
 
@@ -78,25 +81,12 @@ export const youWithGoalSchema = youSchema
 			}
 		}
 
-		if (data.goal === 'gain') {
-			if (data.goalWeight <= data.weight) {
-				return ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					path: ['goalWeight'],
-					message:
-						'This goal weight is lower than your current weight.',
-				});
-			}
-
-			const maximumWeight = getMaximumWeight(height);
-
-			if (data.goalWeight > maximumWeight) {
-				return ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					path: ['goalWeight'],
-					message: `Your goal weight must be between your current weight and ${maximumWeight}kg.`,
-				});
-			}
+		if (data.goal === 'gain' && data.goalWeight <= data.weight) {
+			return ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				path: ['goalWeight'],
+				message: 'This goal weight is lower than your current weight.',
+			});
 		}
 	});
 

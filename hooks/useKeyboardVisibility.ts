@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { Keyboard } from 'react-native';
 
 const getSnapshot = () => Keyboard.isVisible();
