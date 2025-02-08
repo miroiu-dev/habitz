@@ -1,0 +1,33 @@
+import { Image } from 'expo-image';
+import { Link } from 'expo-router';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Badge, Icon, Logo } from '../ui';
+
+const stylesheet = StyleSheet.create({
+	avatar: {
+		width: 48,
+		height: 48,
+	},
+});
+
+export function HomeHeader() {
+	return (
+		<View className="flex flex-row items-center justify-between gap-4">
+			<Link href="/(auth)/index" asChild>
+				<TouchableOpacity>
+					<Image
+						style={stylesheet.avatar}
+						source={require('@/assets/images/avatar.png')}
+					/>
+				</TouchableOpacity>
+			</Link>
+			<Logo />
+
+			<TouchableOpacity>
+				<Badge>
+					<Icon type="bell" />
+				</Badge>
+			</TouchableOpacity>
+		</View>
+	);
+}

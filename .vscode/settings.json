@@ -3,7 +3,6 @@
 		["cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
 		["cx\\(((?:[^()]|\\([^()]*\\))*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
 	],
-	"tailwindCSS.lint.cssConflict": "ignore",
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},

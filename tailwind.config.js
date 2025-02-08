@@ -48,13 +48,14 @@ module.exports = {
 				gold: '#FFCD1B'
 			},
 			fontSize: {
-				large: ['2rem', '2.5rem']
+				xlarge: ['2rem', '2.5rem']
 			}
 		},
 		fontFamily: {
 			'space-grotesk-bold': 'SpaceGrotesk_Bold',
 			'dmsans-medium': 'DMSans_Medium',
-			'dmsans-regular': 'DMSans_Regular'
+			'dmsans-regular': 'DMSans_Regular',
+			syne: 'Syne_Bold'
 		}
 	},
 	plugins: []

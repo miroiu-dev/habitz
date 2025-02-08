@@ -1,17 +1,13 @@
 import { View } from 'react-native';
 import { Text } from './text';
 
-type LogoProps = {
-	variant?: 'title/xlarge' | 'title/large';
-};
-
-export function Logo({ variant = 'title/xlarge' }: LogoProps) {
+export function Logo() {
 	return (
 		<View className="relative">
-			<Text variant={variant} className="z-10">
+			<Text variant="custom" className="z-10 font-syne text-[22px]">
 				habitz
 			</Text>
-			<View className="w-[83px] h-9 bg-primary-20 absolute top-0.5 -left-0.5" />
+			<View className="w-[65px] h-6 bg-primary-20 absolute top-0.5 -left-0.5" />
 		</View>
 	);
 }

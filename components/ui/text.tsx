@@ -13,7 +13,8 @@ const text = cva('text-neutral-70', {
 			'title/base': 'text-base font-space-grotesk-bold',
 			'title/medium': 'text-lg font-space-grotesk-bold',
 			'title/large': 'text-2xl font-space-grotesk-bold',
-			'title/xlarge': 'text-large font-space-grotesk-bold',
+			'title/xlarge': 'text-xlarge font-space-grotesk-bold',
+			custom: '',
 		},
 	},
 	defaultVariants: {

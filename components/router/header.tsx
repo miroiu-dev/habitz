@@ -12,6 +12,10 @@ export function Header({
 }: NativeStackHeaderProps) {
 	const title = getHeaderTitle(options, route.name);
 
+	if (!options.headerShown) {
+		return null;
+	}
+
 	return (
 		<View className="flex flex-row items-center px-6 pb-8 pt-4">
 			{back && (

@@ -8,3 +8,7 @@ export function cn(...classNames: ClassValue[]) {
 export function delay(ms: number) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function getEmptyArray(length: number) {
+	return Array.from({ length }, (_, index) => index);
+}

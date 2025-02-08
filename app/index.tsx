@@ -1,38 +1,31 @@
 import {
-	Button,
-	Container,
-	Illustration,
-	Logo,
-	Spacer,
-	Text,
-} from '@/components/ui';
-import { Link } from 'expo-router';
-import { Fragment } from 'react';
-import { View } from 'react-native';
+	CaloriesCard,
+	HabitList,
+	HomeHeader,
+	MacrosCard,
+} from '@/components/home';
+import { Container, Text } from '@/components/ui';
+import { Carousel } from '@/components/ui/carousel';
+import { getTimeOfDay } from '@/lib/time';
 
 export default function Index() {
+	const timeOfDay = getTimeOfDay();
+
 	return (
-		<Fragment>
-			<Container className="gap-2 pb-2">
-				<View className="flex flex-row align-bottom gap-2">
-					<Text variant="title/xlarge">Welcome to</Text>
-					<Logo />
-				</View>
-				<Text variant="body/base">
-					A uniquely tailored platform designed to help you achieve
-					your personal growth goals.
+		<>
+			<Container>
+				<HomeHeader />
+				<Text variant="title/xlarge" className="mt-6 mb-8">
+					Good {timeOfDay}
 				</Text>
+				<Carousel>
+					<CaloriesCard />
+					<MacrosCard />
+					<CaloriesCard />
+					<MacrosCard />
+				</Carousel>
 			</Container>
-			<Illustration type="watch" style={{ margin: 'auto' }} />
-			<Spacer />
-			<Container className="flex flex-col gap-4">
-				<Link href="/(auth)/sign-up" asChild>
-					<Button title="Sign up for free" />
-				</Link>
-				<Link href="/(auth)/log-in" asChild>
-					<Button title="Log in" variant="secondary" />
-				</Link>
-			</Container>
-		</Fragment>
+			<HabitList />
+		</>
 	);
 }
