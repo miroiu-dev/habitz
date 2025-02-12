@@ -1,5 +1,6 @@
 import { View } from 'react-native';
-import { DonoutChart, Icon, Text } from '../ui';
+import { DonutChart, Icon, Text } from '../ui';
+import { NutritionChart } from './nutrition-chart';
 
 export function CaloriesCard() {
 	return (
@@ -9,7 +10,7 @@ export function CaloriesCard() {
 				<Text>Remaining = goal - food + exercise.</Text>
 			</View>
 			<View className="flex flex-row justify-between items-center flex-1">
-				<DonoutChart
+				<NutritionChart
 					value="526"
 					text="Remaining"
 					radius={70}

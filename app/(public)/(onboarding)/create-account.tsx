@@ -23,7 +23,7 @@ export default function CreateAccount() {
 	const { push } = useRouter();
 
 	const onSubmit: SubmitHandler<CreateAccountSchema> = data => {
-		push('/(auth)/(onboarding)/account-created');
+		push('/(public)/(onboarding)/account-created');
 	};
 
 	return (

@@ -1,6 +1,7 @@
 import { ColorsLight } from '@/constants/Colors';
 import { View } from 'react-native';
-import { DonoutChart, Text } from '../ui';
+import { Text } from '../ui';
+import { NutritionChart } from './nutrition-chart';
 
 export function MacrosCard() {
 	return (
@@ -11,7 +12,7 @@ export function MacrosCard() {
 			<View className="flex flex-row gap-4 justify-center">
 				<View className="flex items-center">
 					<Text variant="title/medium">Protein</Text>
-					<DonoutChart
+					<NutritionChart
 						radius={48}
 						value="526"
 						text="/130g"
@@ -22,7 +23,7 @@ export function MacrosCard() {
 				</View>
 				<View className="flex items-center">
 					<Text variant="title/medium">Fats</Text>
-					<DonoutChart
+					<NutritionChart
 						radius={48}
 						value="526"
 						text="/130g"
@@ -33,7 +34,7 @@ export function MacrosCard() {
 				</View>
 				<View className="flex items-center">
 					<Text variant="title/medium">Carbs</Text>
-					<DonoutChart
+					<NutritionChart
 						radius={48}
 						value="526"
 						text="/130g"

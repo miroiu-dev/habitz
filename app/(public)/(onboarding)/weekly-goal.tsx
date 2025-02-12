@@ -5,7 +5,7 @@ import {
 	FormRadioCardGroup,
 	Text,
 } from '@/components/ui';
-import { type GoalSchema, goalSchema } from '@/lib/schemas/auth';
+import { type WeeklyGoalSchema, weeklyGoalSchema } from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
@@ -13,27 +13,31 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-export default function Goal() {
+export default function WeeklyGoal() {
 	const goal = useOnboardingStore(state => state.goal);
-	const updateGoalData = useOnboardingStore(state => state.updateGoal);
+	const weeklyGoal = useOnboardingStore(state => state.weeklyGoal);
+	const updateWeeklyGoal = useOnboardingStore(
+		state => state.updateWeeklyGoal
+	);
 
-	const { control, handleSubmit } = useForm<GoalSchema>({
-		resolver: zodResolver(goalSchema),
+	const { control, handleSubmit } = useForm<WeeklyGoalSchema>({
+		resolver: zodResolver(weeklyGoalSchema),
 		defaultValues: {
-			goal,
+			weeklyGoal,
 		},
 	});
 
 	const { push } = useRouter();
 
-	const onSubmit: SubmitHandler<GoalSchema> = data => {
-		updateGoalData({
-			goal: data.goal,
+	const onSubmit: SubmitHandler<WeeklyGoalSchema> = data => {
+		updateWeeklyGoal({
+			weeklyGoal: data.weeklyGoal,
 		});
 
-		push('/(auth)/(onboarding)/activity-level');
+		push('/(public)/(onboarding)/you');
 	};
 
+	const type = goal === 'gain' ? 'Gain' : 'Lose';
 	return (
 		<>
 			<KeyboardAwareScrollView
@@ -44,23 +48,31 @@ export default function Goal() {
 				bottomOffset={80}
 			>
 				<Container className="h-full">
-					<Text variant="title/large">Goal</Text>
-
+					<Text variant="title/large">Weekly goal</Text>
 					<Text variant="title/medium" className="mt-8">
-						Let’s start with your goal.
+						What’s your weekly goal?
 					</Text>
-					<Text className="mt-1">
-						Select the one that matters most to you.
-					</Text>
-
-					<FormRadioCardGroup name="goal" control={control}>
+					<FormRadioCardGroup control={control} name="weeklyGoal">
 						<View className="flex my-4 gap-4">
-							<FormRadioCard label="Lose weight" value="lose" />
 							<FormRadioCard
-								label="Maintain weight"
-								value="maintain"
+								label={`${type} 0.25kg per week`}
+								value={0.25}
 							/>
-							<FormRadioCard label="Gain weight" value="gain" />
+
+							<FormRadioCard
+								label={`${type} 0.5kg per week`}
+								value={0.5}
+							/>
+
+							<FormRadioCard
+								label={`${type} 0.75kg per week`}
+								value={0.75}
+							/>
+
+							<FormRadioCard
+								label={`${type} 1kg per week`}
+								value={1}
+							/>
 						</View>
 					</FormRadioCardGroup>
 				</Container>

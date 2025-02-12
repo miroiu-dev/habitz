@@ -42,7 +42,7 @@ export default function You() {
 			weight: data.weight,
 		});
 
-		push('/(auth)/(onboarding)/create-account');
+		push('/(public)/(onboarding)/create-account');
 	};
 
 	return (

@@ -12,8 +12,8 @@ const stylesheet = StyleSheet.create({
 
 export function HomeHeader() {
 	return (
-		<View className="flex flex-row items-center justify-between gap-4">
-			<Link href="/(auth)/index" asChild>
+		<View className="flex flex-row justify-between items-center mb-6">
+			<Link href="/(public)" asChild>
 				<TouchableOpacity>
 					<Image
 						style={stylesheet.avatar}

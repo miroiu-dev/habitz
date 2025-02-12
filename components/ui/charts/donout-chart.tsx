@@ -1,16 +1,16 @@
 import { ColorsLight } from '@/constants/Colors';
-import { useEffect } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
 import Animated, {
 	useAnimatedProps,
 	useSharedValue,
 	withDelay,
 	withTiming,
 } from 'react-native-reanimated';
-import Svg, { Circle, G, Text } from 'react-native-svg';
+import Svg, { Circle, G } from 'react-native-svg';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-type DonoutChartProps = {
+export type DonutChartProps = {
 	percentage?: number;
 	radius?: number;
 	strokeWidth?: number;
@@ -18,13 +18,10 @@ type DonoutChartProps = {
 	color?: string;
 	delay?: number;
 	max?: number;
-	value: string;
-	text: string;
-	textFontSize?: number;
-	valueFontSize?: number;
+	fill?: string;
 };
 
-export function DonoutChart({
+export function DonutChart({
 	percentage = 75,
 	radius = 56,
 	strokeWidth = 8,
@@ -32,11 +29,9 @@ export function DonoutChart({
 	color = ColorsLight.primary[30],
 	delay = 500,
 	max = 100,
-	value,
-	text,
-	textFontSize = 16,
-	valueFontSize = 18,
-}: DonoutChartProps) {
+	fill = 'transparent',
+	children,
+}: PropsWithChildren<DonutChartProps>) {
 	const halfCircle = radius + strokeWidth;
 	const circleCircumference = 2 * Math.PI * radius;
 	const diameter = radius * 2;
@@ -76,7 +71,7 @@ export function DonoutChart({
 					stroke={color}
 					strokeWidth={strokeWidth}
 					r={radius}
-					fill="transparent"
+					fill={fill}
 					strokeOpacity={0.2}
 				/>
 				<AnimatedCircle
@@ -92,27 +87,7 @@ export function DonoutChart({
 					animatedProps={animatedProps}
 				/>
 			</G>
-			<Text
-				x={halfCircle}
-				y={halfCircle - 10}
-				textAnchor="middle"
-				fill="black"
-				fontSize={valueFontSize}
-				fontFamily="DMSans_Medium"
-				fontWeight="bold"
-			>
-				{value}
-			</Text>
-			<Text
-				x={halfCircle}
-				y={halfCircle + 10}
-				textAnchor="middle"
-				fill="black"
-				fontSize={textFontSize}
-				fontFamily="DMSans_Regular"
-			>
-				{text}
-			</Text>
+			{children}
 		</Svg>
 	);
 }

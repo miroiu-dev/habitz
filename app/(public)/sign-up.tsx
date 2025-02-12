@@ -9,7 +9,7 @@ export default function SignUp() {
 				<Text variant="title/medium">
 					Let’s customize Habitz to help you achieve your goals.
 				</Text>
-				<Link href="/(auth)/(onboarding)/welcome" asChild>
+				<Link href="/(public)/(onboarding)/welcome" asChild>
 					<Button title="Continue" className="mt-12" />
 				</Link>
 			</Container>

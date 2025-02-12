@@ -38,11 +38,11 @@ export default function ActivityLevel() {
 		});
 
 		if (goal === 'maintain') {
-			push('/(auth)/(onboarding)/you');
+			push('/(public)/(onboarding)/you');
 			return;
 		}
 
-		push('/(auth)/(onboarding)/weekly-goal');
+		push('/(public)/(onboarding)/weekly-goal');
 	};
 
 	return (

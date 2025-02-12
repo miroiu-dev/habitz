@@ -43,7 +43,7 @@ export default function Onboarding() {
 			gender: data.gender,
 		});
 
-		push('/(auth)/(onboarding)/goal');
+		push('/(public)/(onboarding)/goal');
 	};
 
 	return (

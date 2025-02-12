@@ -72,7 +72,7 @@ export function Carousel({
 	showPagination = true,
 	swipeTreshold = 100,
 }: CarouselProps) {
-	const itemWidth = SCREEN_WIDTH - MARGIN * 2;
+	const itemWidth = SCREEN_WIDTH - 2 * MARGIN;
 	const translateX = useSharedValue(0);
 	const activeIndex = useSharedValue(0);
 	const itemsCount = children.length;

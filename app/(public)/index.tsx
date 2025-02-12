@@ -30,10 +30,10 @@ export default function Index() {
 			<Illustration type="watch" style={{ margin: 'auto' }} />
 			<Spacer />
 			<Container className="flex flex-col gap-4">
-				<Link href="/(auth)/sign-up" asChild>
+				<Link href="/(public)/sign-up" asChild>
 					<Button title="Sign up for free" />
 				</Link>
-				<Link href="/(auth)/log-in" asChild>
+				<Link href="/(public)/log-in" asChild>
 					<Button title="Log in" variant="secondary" />
 				</Link>
 			</Container>

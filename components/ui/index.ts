@@ -10,7 +10,7 @@ export { Input } from './input';
 export { Icon } from './svg/icons';
 export { Illustration } from './svg/illustration';
 export { Badge } from './badge';
-export { DonoutChart } from './charts/donout-chart';
+export { DonutChart } from './charts/donout-chart';
 export { Carousel } from './carousel';
 
 export * from './form';
