@@ -12,7 +12,7 @@ export function Header({
 }: NativeStackHeaderProps) {
 	const title = getHeaderTitle(options, route.name);
 
-	if (!options.headerShown) {
+	if (!(options.headerShown ?? true)) {
 		return null;
 	}
 

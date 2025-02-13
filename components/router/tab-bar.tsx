@@ -14,7 +14,7 @@ import type { IconProps } from '../ui/svg/icons';
 
 function ImproveButton() {
 	return (
-		<Link href="/(app)/improve" asChild>
+		<Link href="/(auth)/(modal)/improve" asChild>
 			<TouchableOpacity className="size-14 bg-neutral-70 flex items-center justify-center rounded-full">
 				<Icon
 					type="plus"
@@ -68,10 +68,6 @@ export function Tab({
 		});
 	};
 
-	if (route.name === 'improve') {
-		return <ImproveButton />;
-	}
-
 	const TabIcon = icon[route.name as keyof typeof icon];
 
 	const focused = useDerivedValue(() => isFocused, [isFocused]);
@@ -109,6 +105,10 @@ export function Tab({
 }
 
 export function TabBar({ state, ...props }: BottomTabBarProps) {
+	const middle = Math.floor(state.routes.length / 2);
+	const leftTabs = state.routes.slice(0, middle);
+	const rightTabs = state.routes.slice(middle);
+
 	return (
 		<View className="pb-9 px-14 pt-8 absolute bottom-0 left-0 right-0">
 			<Fade height={216} />
@@ -116,11 +116,21 @@ export function TabBar({ state, ...props }: BottomTabBarProps) {
 				className="flex flex-row bg-primary-20 h-[72px] items-center justify-between px-10 rounded-full border-2	 border-neutral-70"
 				style={styles.tabBar}
 			>
-				{state.routes.map((route, index) => (
+				{leftTabs.map((route, index) => (
 					<Tab
 						key={route.key}
 						route={route}
 						index={index}
+						state={state}
+						{...props}
+					/>
+				))}
+				<ImproveButton />
+				{rightTabs.map((route, index) => (
+					<Tab
+						key={route.key}
+						route={route}
+						index={index + middle}
 						state={state}
 						{...props}
 					/>

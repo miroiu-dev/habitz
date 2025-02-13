@@ -11,17 +11,6 @@ export default function AppLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="improve"
-				options={{
-					headerShown: false,
-				}}
-				listeners={{
-					tabPress: e => {
-						e.preventDefault();
-					},
-				}}
-			/>
-			<Tabs.Screen
 				name="statistics"
 				options={{
 					headerShown: false,
