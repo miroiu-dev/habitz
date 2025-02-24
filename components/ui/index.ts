@@ -13,6 +13,7 @@ export { Badge } from './badge';
 export { DonutChart } from './charts/donout-chart';
 export { Carousel } from './carousel';
 export { ActionPresentationCard } from './action-presentation-card';
+export { RulerPicker } from './ruler-picker';
 
 export * from './form';
 export * from './svg';

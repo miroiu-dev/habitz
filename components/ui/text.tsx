@@ -3,7 +3,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { PropsWithChildren } from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 
-const text = cva('text-neutral-70', {
+export const text = cva('text-neutral-70', {
 	variants: {
 		variant: {
 			'body/small': 'text-xs leading-4 font-dmsans-regular',

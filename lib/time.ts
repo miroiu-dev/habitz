@@ -15,3 +15,7 @@ export function getTimeOfDay() {
 
 	return 'evening';
 }
+
+export function getToday() {
+	return DateTime.now().toFormat('dd MMMM, yyyy');
+}

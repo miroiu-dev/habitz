@@ -9,6 +9,20 @@ export function delay(ms: number) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function getEmptyArray(length: number) {
+export function getIndexedArray(length: number) {
 	return Array.from({ length }, (_, index) => index);
 }
+
+export const generateScaleData = (
+	minValue: number,
+	maxValue: number,
+	step: number
+) => {
+	const data = [];
+
+	for (let i = minValue; Number(i.toFixed(1)) <= maxValue; i += step) {
+		data.push(Number(i.toFixed(1)));
+	}
+
+	return data;
+};

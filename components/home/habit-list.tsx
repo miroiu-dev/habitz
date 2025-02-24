@@ -79,6 +79,9 @@ export function HabitList() {
 			</View>
 			<HabitListItem />
 			<HabitListItem />
+			<HabitListItem />
+			<HabitListItem />
+			<HabitListItem />
 		</View>
 	);
 }

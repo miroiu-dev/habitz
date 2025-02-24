@@ -13,6 +13,10 @@ export default function Layout() {
 				name="(modal)/improve"
 				options={{ title: 'Improve yourself' }}
 			/>
+			<Stack.Screen
+				name="(in-progress)/body-composition"
+				options={{ title: 'Body composition' }}
+			/>
 		</Stack>
 	);
 }

@@ -6,6 +6,7 @@ import Animated, {
 	clamp,
 	useAnimatedStyle,
 	useSharedValue,
+	withClamp,
 	withSpring,
 	type SharedValue,
 } from 'react-native-reanimated';
@@ -100,7 +101,6 @@ export function Carousel({
 			'worklet';
 
 			const minSwipeLeft = MARGIN;
-
 			const maxSwipeRight =
 				-(itemsCount - 1) * itemWidth - itemsCount * MARGIN;
 			const newTranslateX =
