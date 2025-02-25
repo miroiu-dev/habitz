@@ -1,10 +1,17 @@
+import { MeasurementBottomSheet } from '@/components/body-composition/measurement-bottom-sheet';
 import {
 	CaloriesCard,
 	HabitList,
 	HomeHeader,
 	MacrosCard,
 } from '@/components/home';
-import { Carousel, Container, RulerPicker, Text } from '@/components/ui';
+import {
+	Button,
+	Carousel,
+	Container,
+	RulerPicker,
+	Text,
+} from '@/components/ui';
 import { getTimeOfDay } from '@/lib/time';
 import { Link } from 'expo-router';
 import { ScrollView } from 'react-native';
@@ -14,7 +21,10 @@ export default function Home() {
 
 	return (
 		<>
-			<RulerPicker initialValue={2.4} />
+			<Link href="/body-composition" asChild>
+				<Button title="test" />
+			</Link>
+
 			{/* <ScrollView
 				showsVerticalScrollIndicator={false}
 				overScrollMode="never"

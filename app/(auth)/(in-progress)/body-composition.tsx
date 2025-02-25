@@ -24,7 +24,11 @@ export default function BodyComposition() {
 				</View>
 				<View className="flex flex-row justify-between items-center mt-8 mb-6 gap-2">
 					<View className="flex gap-4">
-						<MeasurementCard muscle="Neck" value={36.4} />
+						<MeasurementCard
+							muscle="Neck"
+							value={36.4}
+							onPress={() => bottomSheetRef.current?.expand()}
+						/>
 						<MeasurementCard
 							muscle="Biceps"
 							value={36.4}
@@ -58,7 +62,7 @@ export default function BodyComposition() {
 				<WaistHipRatioCard ratio={0.84} />
 				<Button title="Save all" className="mt-6" />
 
-				<MeasurementBottomSheet />
+				<MeasurementBottomSheet ref={bottomSheetRef} />
 			</Container>
 		</ScrollView>
 	);
