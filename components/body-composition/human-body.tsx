@@ -4,11 +4,11 @@ import { memo } from 'react';
 import { Path, Svg, type SvgProps } from 'react-native-svg';
 
 export type HumanBodyProps = {
-	highlight?: Muscle;
+	highlight: Muscle | null;
 } & SvgProps;
 
 function getHighlightColorForMuscle(
-	targetMuscle: Muscle | undefined,
+	targetMuscle: Muscle | null,
 	muscle: Muscle
 ) {
 	if (muscle === targetMuscle) {
@@ -19,7 +19,7 @@ function getHighlightColorForMuscle(
 }
 
 function getHighlightColorForMuscles(
-	targetMuscle: Muscle | undefined,
+	targetMuscle: Muscle | null,
 	...muscles: Muscle[]
 ) {
 	if (!targetMuscle) {

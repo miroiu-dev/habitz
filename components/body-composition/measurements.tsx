@@ -1,41 +1,14 @@
 import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
 import type { Muscle } from '@/lib/types';
-import type { BottomSheetModal as RNBottomSheetModal } from '@gorhom/bottom-sheet';
-import { useCallback, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { HumanBody } from './human-body';
 import { MeasurementCard } from './measurement-card';
 
-// <BottomSheetModal ref={bottomSheetRef}>
-// 					<Text variant="title/medium" className="text-center mb-8">
-// 						Choose{' '}
-// 						<Text
-// 							variant="title/medium"
-// 							className="text-primary-30"
-// 						>
-// 							{camelToFlat(selectedMuscle ?? '')}
-// 						</Text>{' '}
-// 						size
-// 					</Text>
-// 					<RulerPicker initialValue={5} />
-// 					<Button
-// 						title="Confirm"
-// 						className="mt-8 my-4 mx-6"
-// 						onPress={hideMeasurementBottomSheet}
-// 					/>
-// 				</BottomSheetModal>
+type MeasurementsProps = {
+	openBottomSheet: () => void;
+};
 
-export function Measurements() {
-	// const bottomSheetRef = useRef<RNBottomSheetModal>(null);
-
-	// const showMeasurementBottomSheet = (muscle: Muscle) => {
-	// 	// bottomSheetRef.current?.present();
-	// };
-
-	// const hideMeasurementBottomSheet = () => {
-	// 	// bottomSheetRef.current?.dismiss();
-	// };
-
+export function Measurements({ openBottomSheet }: MeasurementsProps) {
 	const selectedMuscle = useBodyCompositionStore(
 		state => state.selectedMuscle
 	);
@@ -44,10 +17,10 @@ export function Measurements() {
 		state => state.setSelectedMuscle
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Imutable function
-	const handleSelectMuscle = useCallback((muscle: Muscle) => {
+	const handleSelectMuscle = (muscle: Muscle) => {
 		setSelectedMuscle(muscle);
-	}, []);
+		openBottomSheet();
+	};
 
 	return (
 		<View className="flex flex-row justify-between items-center mt-8 mb-6 gap-2">

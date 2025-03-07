@@ -1,17 +1,15 @@
 import { ColorsLight } from '@/constants/Colors';
 import { generateScaleData } from '@/lib/utils';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useLayoutEffect, useMemo } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
+import type { FlatList } from 'react-native-gesture-handler';
 import Animated, {
 	clamp,
 	runOnJS,
-	useAnimatedRef,
 	useAnimatedScrollHandler,
 	useSharedValue,
 } from 'react-native-reanimated';
-import type { AnimatedScrollView } from 'react-native-reanimated/lib/typescript/component/ScrollView';
 import { Text } from '../text';
 import { AnimatedText } from './animated-text';
 import { itemSize, rulerWidth, scale, width } from './constants';
@@ -32,7 +30,7 @@ export function RulerPicker({
 	initialValue = 0,
 	step = 0.1,
 }: RulerProps) {
-	const scrollViewRef = useAnimatedRef<AnimatedScrollView>();
+	const flatListRef = useRef<FlatList>(null);
 
 	const data = useMemo(
 		() => generateScaleData(minValue, maxValue, step),
@@ -46,11 +44,10 @@ export function RulerPicker({
 
 	const scrollX = useSharedValue(initialIndex * itemSize);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: No need to add scrollViewRef to the dependencies because it's a ref
 	useLayoutEffect(() => {
-		if (scrollViewRef.current) {
-			scrollViewRef.current.scrollTo({
-				x: initialIndex * itemSize,
+		if (flatListRef.current) {
+			flatListRef.current.scrollToIndex({
+				index: initialIndex,
 				animated: false,
 			});
 		}
@@ -71,6 +68,19 @@ export function RulerPicker({
 		},
 	});
 
+	const getItemLayout = useCallback(
+		(_: unknown, index: number) => {
+			const length = index === data.length - 1 ? rulerWidth : itemSize;
+
+			return {
+				length,
+				offset: length * index,
+				index,
+			};
+		},
+		[data]
+	);
+
 	return (
 		<View style={styles.container}>
 			<View className="flex flex-row gap-1 items-baseline justify-center mb-2">
@@ -83,17 +93,26 @@ export function RulerPicker({
 				</Text>
 			</View>
 			<View>
-				<Animated.ScrollView
-					ref={scrollViewRef}
+				<Animated.FlatList
+					ref={flatListRef}
+					data={data}
+					keyExtractor={String}
 					bounces={false}
 					horizontal
 					showsHorizontalScrollIndicator={false}
-					decelerationRate={0.98}
+					decelerationRate="normal"
+					getItemLayout={getItemLayout}
 					snapToInterval={itemSize}
 					contentContainerStyle={styles.flatListContent}
+					renderItem={({ item, index }) => (
+						<RulerLine
+							value={item}
+							index={index}
+							isLastItem={item === maxValue}
+						/>
+					)}
 					onScroll={onScroll}
 					scrollEventThrottle={16}
-					removeClippedSubviews={false}
 					maintainVisibleContentPosition={{
 						minIndexForVisible: 0,
 						autoscrollToTopThreshold: 10,
@@ -107,7 +126,7 @@ export function RulerPicker({
 							isLastItem={item === maxValue}
 						/>
 					))}
-				</Animated.ScrollView>
+				</Animated.FlatList>
 				<View style={styles.indicatorContainer}>
 					<View style={styles.indicator} />
 					<View style={styles.indicatorDot} />
