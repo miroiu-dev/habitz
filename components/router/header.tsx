@@ -1,6 +1,7 @@
 import { getHeaderTitle } from '@react-navigation/elements';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton } from '../ui/icon-button';
 import { Text } from '../ui/text';
 
@@ -17,7 +18,7 @@ export function Header({
 	}
 
 	return (
-		<View className="flex flex-row items-center px-6 pb-8 pt-4">
+		<SafeAreaView className="flex flex-row items-center px-6 pb-8 pt-4">
 			{back && (
 				<IconButton
 					type="back"
@@ -26,6 +27,6 @@ export function Header({
 				/>
 			)}
 			<Text variant="title/large">{title}</Text>
-		</View>
+		</SafeAreaView>
 	);
 }

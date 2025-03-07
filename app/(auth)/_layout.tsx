@@ -17,6 +17,7 @@ export default function Layout() {
 				name="(in-progress)/body-composition"
 				options={{ title: 'Body composition' }}
 			/>
+			<Stack.Screen name="(in-progress)/new-habit" />
 		</Stack>
 	);
 }

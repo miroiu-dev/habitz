@@ -1,5 +1,6 @@
 import { LightTheme } from '@/components/theme/router-theme';
 import { toastConfig } from '@/lib/toast';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
@@ -8,12 +9,13 @@ import {
 	preventAutoHideAsync,
 } from 'expo-router/build/utils/splash';
 import { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { SystemBars } from 'react-native-edge-to-edge';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
 
 import '../global.css';
+import { StatusBar } from 'react-native';
 
 preventAutoHideAsync();
 
@@ -37,13 +39,15 @@ export default function RootLayout() {
 
 	return (
 		<GestureHandlerRootView>
-			<ThemeProvider value={LightTheme}>
-				<StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-				<KeyboardProvider>
-					<Slot initialRouteName="(auth)" />
-				</KeyboardProvider>
-				<Toast config={toastConfig} />
-			</ThemeProvider>
+			<BottomSheetModalProvider>
+				<ThemeProvider value={LightTheme}>
+					<SystemBars style="dark" />
+					<KeyboardProvider>
+						<Slot initialRouteName="(auth)" />
+					</KeyboardProvider>
+					<Toast config={toastConfig} />
+				</ThemeProvider>
+			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);
 }

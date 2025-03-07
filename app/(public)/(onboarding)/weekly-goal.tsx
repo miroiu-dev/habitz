@@ -12,6 +12,7 @@ import { useRouter } from 'expo-router';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function WeeklyGoal() {
 	const goal = useOnboardingStore(state => state.goal);
@@ -39,7 +40,7 @@ export default function WeeklyGoal() {
 
 	const type = goal === 'gain' ? 'Gain' : 'Lose';
 	return (
-		<>
+		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
 				overScrollMode="never"
@@ -78,6 +79,6 @@ export default function WeeklyGoal() {
 				</Container>
 			</KeyboardAwareScrollView>
 			<OnboardingActions onSubmit={handleSubmit(onSubmit)} />
-		</>
+		</SafeAreaView>
 	);
 }

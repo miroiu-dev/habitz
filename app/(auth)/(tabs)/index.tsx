@@ -1,31 +1,21 @@
-import { MeasurementBottomSheet } from '@/components/body-composition/measurement-bottom-sheet';
 import {
 	CaloriesCard,
 	HabitList,
 	HomeHeader,
 	MacrosCard,
 } from '@/components/home';
-import {
-	Button,
-	Carousel,
-	Container,
-	RulerPicker,
-	Text,
-} from '@/components/ui';
+import { Carousel, Container, Text } from '@/components/ui';
 import { getTimeOfDay } from '@/lib/time';
 import { Link } from 'expo-router';
 import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home() {
-	// const timeOfDay = getTimeOfDay();
+	const timeOfDay = getTimeOfDay();
 
 	return (
-		<>
-			<Link href="/body-composition" asChild>
-				<Button title="test" />
-			</Link>
-
-			{/* <ScrollView
+		<SafeAreaView>
+			<ScrollView
 				showsVerticalScrollIndicator={false}
 				overScrollMode="never"
 			>
@@ -35,13 +25,13 @@ export default function Home() {
 						Good {timeOfDay}
 					</Text>
 					<Link href="/body-composition">asd</Link>
-					<Carousel>
+					<Carousel swipeTreshold={50}>
 						<CaloriesCard />
 						<MacrosCard />
 					</Carousel>
 				</Container>
 				<HabitList />
-			</ScrollView> */}
-		</>
+			</ScrollView>
+		</SafeAreaView>
 	);
 }

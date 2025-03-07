@@ -1,25 +1,16 @@
 import { ColorsLight } from '@/constants/Colors';
+import type { Muscle } from '@/lib/types';
+import { memo } from 'react';
 import { Path, Svg, type SvgProps } from 'react-native-svg';
 
-type Muscle =
-	| 'neck'
-	| 'leftBiceps'
-	| 'rightBiceps'
-	| 'chest'
-	| 'abs'
-	| 'leftTigh'
-	| 'rightTigh'
-	| 'leftCalf'
-	| 'rightCalf'
-	| 'shoulder'
-	| 'waist'
-	| 'hip';
-
 export type HumanBodyProps = {
-	highlight: Muscle;
+	highlight?: Muscle;
 } & SvgProps;
 
-function getHighlightColorForMuscle(targetMuscle: Muscle, muscle: Muscle) {
+function getHighlightColorForMuscle(
+	targetMuscle: Muscle | undefined,
+	muscle: Muscle
+) {
 	if (muscle === targetMuscle) {
 		return ColorsLight.primary[30];
 	}
@@ -27,10 +18,14 @@ function getHighlightColorForMuscle(targetMuscle: Muscle, muscle: Muscle) {
 	return ColorsLight.neutral[70];
 }
 
-function getHighlightColorForMultipleMuscles(
-	targetMuscle: Muscle,
+function getHighlightColorForMuscles(
+	targetMuscle: Muscle | undefined,
 	...muscles: Muscle[]
 ) {
+	if (!targetMuscle) {
+		return ColorsLight.neutral[70];
+	}
+
 	if (muscles.includes(targetMuscle)) {
 		return ColorsLight.primary[30];
 	}
@@ -38,12 +33,12 @@ function getHighlightColorForMultipleMuscles(
 	return ColorsLight.neutral[70];
 }
 
-export function HumanBody({ highlight, ...props }: HumanBodyProps) {
-	const neckFill = getHighlightColorForMuscle('neck', highlight);
-	const leftBicepsFill = getHighlightColorForMuscle('leftBiceps', highlight);
+export const HumanBody = memo(({ highlight, ...props }: HumanBodyProps) => {
+	const neckFill = getHighlightColorForMuscle(highlight, 'neck');
+	const leftBicepsFill = getHighlightColorForMuscle(highlight, 'leftBiceps');
 	const rightBicepsFill = getHighlightColorForMuscle(
-		'rightBiceps',
-		highlight
+		highlight,
+		'rightBiceps'
 	);
 	const chestFill = getHighlightColorForMuscle(highlight, 'chest');
 	const absFill = getHighlightColorForMuscle(highlight, 'abs');
@@ -53,25 +48,30 @@ export function HumanBody({ highlight, ...props }: HumanBodyProps) {
 	const rightCalfFill = getHighlightColorForMuscle(highlight, 'rightCalf');
 	const shoulderFill = getHighlightColorForMuscle(highlight, 'shoulder');
 	const waistFill = getHighlightColorForMuscle(highlight, 'waist');
-	const hipFill = getHighlightColorForMuscle(highlight, 'hip');
-	const absAndWaistFill = getHighlightColorForMultipleMuscles(
+	const absAndWaistFill = getHighlightColorForMuscles(
 		highlight,
 		'abs',
 		'waist'
 	);
-	const hipAndLeftTighFill = getHighlightColorForMultipleMuscles(
+	const hipAndLeftTighFill = getHighlightColorForMuscles(
 		highlight,
 		'hip',
 		'leftTigh'
 	);
-	const hipAndRightTighFill = getHighlightColorForMultipleMuscles(
+	const hipAndRightTighFill = getHighlightColorForMuscles(
 		highlight,
 		'hip',
 		'rightTigh'
 	);
 
 	return (
-		<Svg width="144" height="287" viewBox="0 0 144 287" fill="none">
+		<Svg
+			width="144"
+			height="287"
+			viewBox="0 0 144 287"
+			fill="none"
+			{...props}
+		>
 			<Path
 				fillRule="evenodd"
 				clipRule="evenodd"
@@ -920,4 +920,4 @@ export function HumanBody({ highlight, ...props }: HumanBodyProps) {
 			/>
 		</Svg>
 	);
-}
+});

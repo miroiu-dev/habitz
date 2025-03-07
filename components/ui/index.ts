@@ -14,6 +14,7 @@ export { DonutChart } from './charts/donout-chart';
 export { Carousel } from './carousel';
 export { ActionPresentationCard } from './action-presentation-card';
 export { RulerPicker } from './ruler-picker';
+export { BottomSheetModal } from './bottom-sheet-modal';
 
 export * from './form';
 export * from './svg';

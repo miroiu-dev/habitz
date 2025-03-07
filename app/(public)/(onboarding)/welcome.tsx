@@ -15,6 +15,7 @@ import { useRouter } from 'expo-router';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Onboarding() {
 	const age = useOnboardingStore(state => state.age);
@@ -47,7 +48,7 @@ export default function Onboarding() {
 	};
 
 	return (
-		<>
+		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
 				overScrollMode="never"
@@ -98,6 +99,6 @@ export default function Onboarding() {
 				</Container>
 			</KeyboardAwareScrollView>
 			<OnboardingActions onSubmit={handleSubmit(onSubmit)} />
-		</>
+		</SafeAreaView>
 	);
 }

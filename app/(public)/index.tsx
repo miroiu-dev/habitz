@@ -8,10 +8,11 @@ import {
 } from '@/components/ui';
 import { Link } from 'expo-router';
 import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
 	return (
-		<>
+		<SafeAreaView style={{ flex: 1 }}>
 			<Container className="gap-2 pb-2">
 				<View className="flex flex-row align-bottom gap-2">
 					<Text variant="title/xlarge">Welcome to</Text>
@@ -37,6 +38,6 @@ export default function Index() {
 					<Button title="Log in" variant="secondary" />
 				</Link>
 			</Container>
-		</>
+		</SafeAreaView>
 	);
 }

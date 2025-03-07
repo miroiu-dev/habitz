@@ -2,13 +2,13 @@ import { View } from 'react-native';
 import { Text } from '../ui';
 
 type WaistHipRatioCardProps = {
-	ratio: number;
+	ratio?: number;
 };
 
 export function WaistHipRatioCard({ ratio }: WaistHipRatioCardProps) {
 	return (
 		<View className="flex items-center bg-primary-1 rounded-lg py-3 px-6">
-			<Text variant="title/large">{ratio}</Text>
+			<Text variant="title/large">{ratio ?? '--'}</Text>
 
 			<View className="flex flex-row">
 				<View className="flex flex-1 gap-1">

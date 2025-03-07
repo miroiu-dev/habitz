@@ -30,7 +30,7 @@ type PaginationDotProps = {
 };
 
 function PaginationDot({ activeIndex, index }: PaginationDotProps) {
-	const stylez = useAnimatedStyle(() => {
+	const animatedStyles = useAnimatedStyle(() => {
 		const isActive = activeIndex.value === index;
 
 		return {
@@ -41,7 +41,7 @@ function PaginationDot({ activeIndex, index }: PaginationDotProps) {
 		};
 	});
 
-	return <Animated.View className="h-2 rounded" style={stylez} />;
+	return <Animated.View className="h-2 rounded" style={animatedStyles} />;
 }
 
 function Pagination({
