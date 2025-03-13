@@ -1,7 +1,6 @@
 import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
 import type { Muscle } from '@/lib/types';
-import { startTransition } from 'react';
-import { View } from 'react-native';
+import { InteractionManager, View } from 'react-native';
 import { HumanBody } from './human-body';
 import { MeasurementCard } from './measurement-card';
 
@@ -24,8 +23,9 @@ export function Measurements({ openBottomSheet }: MeasurementsProps) {
 		}
 
 		openBottomSheet();
+
 		requestAnimationFrame(() => {
-			startTransition(() => {
+			InteractionManager.runAfterInteractions(() => {
 				setSelectedMuscle(muscle);
 			});
 		});
@@ -74,7 +74,9 @@ export function Measurements({ openBottomSheet }: MeasurementsProps) {
 					isActive={selectedMuscle === 'leftCalf'}
 				/>
 			</View>
-			<View>{/* <HumanBody highlight={selectedMuscle} /> */}</View>
+			<View>
+				<HumanBody highlight={selectedMuscle} />
+			</View>
 			<View className='flex gap-4'>
 				<MeasurementCard
 					onSelectMuscle={handleSelectMuscle}

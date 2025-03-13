@@ -1,6 +1,7 @@
 import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
+import { InteractionManager } from 'react-native';
 
 export function useMeasurement() {
 	const { dismiss } = useBottomSheetModal();
@@ -28,9 +29,14 @@ export function useMeasurement() {
 
 	const handleConfirm = () => {
 		if (selectedMuscle === null) return;
-		console.log(selectedMuscle, measurement);
+
 		setMuscleMeasurement(selectedMuscle, measurement);
-		dismiss();
+
+		requestAnimationFrame(() => {
+			InteractionManager.runAfterInteractions(() => {
+				dismiss();
+			});
+		});
 	};
 
 	const onValueChange = (value: number) => {
@@ -42,6 +48,6 @@ export function useMeasurement() {
 		selectedMuscleInitialMeasurement,
 		handleClose,
 		handleConfirm,
-		onValueChange,
+		onValueChange
 	};
 }
