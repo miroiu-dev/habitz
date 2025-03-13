@@ -1,14 +1,38 @@
+import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
+import {
+	getWaistHipRatio,
+	getWaistHipRatioColor,
+	getWaistHipRatioText,
+} from '@/lib/utils';
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { Text } from '../ui';
 
-type WaistHipRatioCardProps = {
-	ratio?: number;
-};
+export function WaistHipRatioCard() {
+	const waist = useBodyCompositionStore(state => state.waist);
+	const hip = useBodyCompositionStore(state => state.hip);
 
-export function WaistHipRatioCard({ ratio }: WaistHipRatioCardProps) {
+	const waistHipRatio = useMemo(
+		() => getWaistHipRatio(waist, hip),
+		[waist, hip]
+	);
+
+	const waistHipRatioColor = useMemo(
+		() => getWaistHipRatioColor(waistHipRatio),
+		[waistHipRatio]
+	);
+
+	const waistHipRatioText = useMemo(
+		() => getWaistHipRatioText(waistHipRatio),
+		[waistHipRatio]
+	);
+
 	return (
 		<View className="flex items-center bg-primary-1 rounded-lg py-3 px-6">
-			<Text variant="title/large">{ratio ?? '--'}</Text>
+			<Text variant="body/small">{waistHipRatio}</Text>
+			<Text variant="title/large" className={waistHipRatioColor}>
+				{waistHipRatioText}
+			</Text>
 
 			<View className="flex flex-row">
 				<View className="flex flex-1 gap-1">

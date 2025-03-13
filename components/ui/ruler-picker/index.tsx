@@ -1,18 +1,16 @@
 import { ColorsLight } from '@/constants/Colors';
 import { generateScaleData } from '@/lib/utils';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { FlatList } from 'react-native-gesture-handler';
 import Animated, {
 	clamp,
 	runOnJS,
 	useAnimatedScrollHandler,
 	useSharedValue,
 } from 'react-native-reanimated';
-import { Text } from '../text';
-import { AnimatedText } from './animated-text';
 import { itemSize, rulerWidth, scale, width } from './constants';
+import { Measurement } from './measurement';
 import { RulerLine } from './ruler-line';
 
 type RulerProps = {
@@ -30,28 +28,17 @@ export function RulerPicker({
 	initialValue = 0,
 	step = 0.1,
 }: RulerProps) {
-	const flatListRef = useRef<FlatList>(null);
-
 	const data = useMemo(
 		() => generateScaleData(minValue, maxValue, step),
 		[minValue, maxValue, step]
 	);
 
-	const initialIndex = useMemo(
-		() => Math.round((initialValue - minValue) / step),
-		[initialValue, minValue, step]
-	);
+	const initialOffset = useMemo(() => {
+		const index = Math.round((initialValue - minValue) / step);
+		return index * itemSize;
+	}, [initialValue, minValue, step]);
 
-	const scrollX = useSharedValue(initialIndex * itemSize);
-
-	useLayoutEffect(() => {
-		if (flatListRef.current) {
-			flatListRef.current.scrollToIndex({
-				index: initialIndex,
-				animated: false,
-			});
-		}
-	}, [initialIndex]);
+	const scrollX = useSharedValue(initialOffset);
 
 	const onScroll = useAnimatedScrollHandler({
 		onScroll: event => {
@@ -83,18 +70,9 @@ export function RulerPicker({
 
 	return (
 		<View style={styles.container}>
-			<View className="flex flex-row gap-1 items-baseline justify-center mb-2">
-				<AnimatedText displayText={scrollX} defaultValue={minValue} />
-				<Text
-					variant="body/small"
-					style={{ fontVariant: ['tabular-nums'] }}
-				>
-					cm
-				</Text>
-			</View>
+			<Measurement minValue={minValue} scrollX={scrollX} />
 			<View>
 				<Animated.FlatList
-					ref={flatListRef}
 					data={data}
 					keyExtractor={String}
 					bounces={false}
@@ -108,40 +86,47 @@ export function RulerPicker({
 						<RulerLine
 							value={item}
 							index={index}
+							key={item}
 							isLastItem={item === maxValue}
 						/>
 					)}
 					onScroll={onScroll}
 					scrollEventThrottle={16}
+					removeClippedSubviews={false}
+					initialNumToRender={50}
+					maxToRenderPerBatch={25}
+					windowSize={21}
+					updateCellsBatchingPeriod={10}
+					contentOffset={{ x: initialOffset, y: 0 }}
+					persistentScrollbar={true}
 					maintainVisibleContentPosition={{
 						minIndexForVisible: 0,
 						autoscrollToTopThreshold: 10,
 					}}
-				>
-					{data.map((item, index) => (
-						<RulerLine
-							key={item}
-							value={item}
-							index={index}
-							isLastItem={item === maxValue}
-						/>
-					))}
-				</Animated.FlatList>
-				<View style={styles.indicatorContainer}>
-					<View style={styles.indicator} />
-					<View style={styles.indicatorDot} />
-				</View>
-				<LinearGradient
-					style={StyleSheet.absoluteFillObject}
-					colors={['#fff', 'transparent', '#fff']}
-					start={[0, 0.5]}
-					end={[1, 0.5]}
-					pointerEvents="none"
 				/>
+				<Indicator />
+				<GradientOverlay />
 			</View>
 		</View>
 	);
 }
+
+export const Indicator = memo(() => (
+	<View style={styles.indicatorContainer}>
+		<View style={styles.indicator} />
+		<View style={styles.indicatorDot} />
+	</View>
+));
+
+const GradientOverlay = memo(() => (
+	<LinearGradient
+		style={StyleSheet.absoluteFillObject}
+		colors={['#fff', 'transparent', '#fff']}
+		start={[0, 0.5]}
+		end={[1, 0.5]}
+		pointerEvents="none"
+	/>
+));
 
 const styles = StyleSheet.create({
 	container: {

@@ -9,7 +9,7 @@ export function Header({
 	navigation,
 	options,
 	route,
-	back,
+	back
 }: NativeStackHeaderProps) {
 	const title = getHeaderTitle(options, route.name);
 
@@ -18,15 +18,18 @@ export function Header({
 	}
 
 	return (
-		<SafeAreaView className="flex flex-row items-center px-6 pb-8 pt-4">
+		<SafeAreaView
+			className='flex flex-row items-center px-6 pb-8 pt-4'
+			edges={['top']}
+		>
 			{back && (
 				<IconButton
-					type="back"
+					type='back'
 					onPress={() => navigation.goBack()}
-					className="mr-4"
+					className='mr-4'
 				/>
 			)}
-			<Text variant="title/large">{title}</Text>
+			<Text variant='title/large'>{title}</Text>
 		</SafeAreaView>
 	);
 }

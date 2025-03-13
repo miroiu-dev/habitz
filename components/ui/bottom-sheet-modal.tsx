@@ -3,10 +3,11 @@ import {
 	BottomSheetBackdrop,
 	type BottomSheetProps,
 	BottomSheetView,
-	BottomSheetModal as RNBottomSheetModal,
+	BottomSheetModal as RNBottomSheetModal
 } from '@gorhom/bottom-sheet';
 import type { BottomSheetDefaultBackdropProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 import { forwardRef } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SheetBackground(props: BottomSheetDefaultBackdropProps) {
 	return (
@@ -17,7 +18,7 @@ function SheetBackground(props: BottomSheetDefaultBackdropProps) {
 				top: 0,
 				left: 0,
 				right: 0,
-				bottom: 0,
+				bottom: 0
 			}}
 			disappearsOnIndex={-1}
 			appearsOnIndex={0}
@@ -38,7 +39,7 @@ export const BottomSheetModal = forwardRef<
 			enableContentPanningGesture={false}
 			handleIndicatorStyle={{
 				backgroundColor: ColorsLight.neutral[30],
-				width: 100,
+				width: 100
 			}}
 			{...props}
 		>

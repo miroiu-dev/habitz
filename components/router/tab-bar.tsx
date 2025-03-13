@@ -6,18 +6,19 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
 	useDerivedValue,
-	withSpring,
+	withSpring
 } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from '../ui';
 import { Fade } from '../ui/fade';
 import type { IconProps } from '../ui/svg/icons';
 
 function ImproveButton() {
 	return (
-		<Link href="/(auth)/(modal)/improve" asChild>
-			<TouchableOpacity className="size-14 bg-neutral-70 flex items-center justify-center rounded-full">
+		<Link href='/(auth)/(modal)/new-habit' asChild>
+			<TouchableOpacity className='size-14 bg-neutral-70 flex items-center justify-center rounded-full'>
 				<Icon
-					type="plus"
+					type='plus'
 					width={22}
 					height={24}
 					fill={ColorsLight.neutral[0]}
@@ -28,10 +29,10 @@ function ImproveButton() {
 }
 
 const icon = {
-	index: (props: Omit<IconProps, 'type'>) => <Icon type="home" {...props} />,
+	index: (props: Omit<IconProps, 'type'>) => <Icon type='home' {...props} />,
 	statistics: (props: Omit<IconProps, 'type'>) => (
-		<Icon type="statistics" {...props} />
-	),
+		<Icon type='statistics' {...props} />
+	)
 };
 
 type TabProps = BottomTabBarProps & {
@@ -44,7 +45,7 @@ export function Tab({
 	route,
 	index,
 	navigation,
-	state,
+	state
 }: TabProps) {
 	const { options } = descriptors[route.key];
 	const isFocused = state.index === index;
@@ -53,7 +54,7 @@ export function Tab({
 		const event = navigation.emit({
 			type: 'tabPress',
 			target: route.key,
-			canPreventDefault: true,
+			canPreventDefault: true
 		});
 
 		if (!isFocused && !event.defaultPrevented) {
@@ -64,7 +65,7 @@ export function Tab({
 	const onLongPress = () => {
 		navigation.emit({
 			type: 'tabLongPress',
-			target: route.key,
+			target: route.key
 		});
 	};
 
@@ -78,18 +79,18 @@ export function Tab({
 		return {
 			transform: [
 				{
-					scale: withSpring(scale),
+					scale: withSpring(scale)
 				},
 				{
-					translateX: '-50%',
-				},
-			],
+					translateX: '-50%'
+				}
+			]
 		};
 	});
 
 	return (
 		<TouchableOpacity
-			className="relative"
+			className='relative'
 			accessibilityState={{ selected: isFocused }}
 			testID={options.tabBarButtonTestID}
 			onPress={onPress}
@@ -97,7 +98,7 @@ export function Tab({
 		>
 			<TabIcon />
 			<Animated.View
-				className="absolute left-1/2 size-2 -bottom-3 bg-neutral-70 rounded-full"
+				className='absolute left-1/2 size-2 -bottom-3 bg-neutral-70 rounded-full'
 				style={dotStyle}
 			/>
 		</TouchableOpacity>
@@ -110,10 +111,13 @@ export function TabBar({ state, ...props }: BottomTabBarProps) {
 	const rightTabs = state.routes.slice(middle);
 
 	return (
-		<View className="pb-9 px-14 pt-8 absolute bottom-0 left-0 right-0">
+		<SafeAreaView
+			edges={['bottom']}
+			className='pb-9 px-14 pt-8 absolute bottom-0 left-0 right-0'
+		>
 			<Fade height={216} />
 			<View
-				className="flex flex-row bg-primary-20 h-[72px] items-center justify-between px-10 rounded-full border-2	 border-neutral-70"
+				className='flex flex-row bg-primary-20 h-[72px] items-center justify-between px-10 rounded-full border-2	 border-neutral-70'
 				style={styles.tabBar}
 			>
 				{leftTabs.map((route, index) => (
@@ -136,7 +140,7 @@ export function TabBar({ state, ...props }: BottomTabBarProps) {
 					/>
 				))}
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 }
 
@@ -149,8 +153,8 @@ const styles = StyleSheet.create({
 				blurRadius: 0,
 				color: ColorsLight.neutral[70],
 				inset: false,
-				spreadDistance: 0,
-			},
-		],
-	},
+				spreadDistance: 0
+			}
+		]
+	}
 });

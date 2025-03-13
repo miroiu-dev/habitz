@@ -2,7 +2,7 @@ import {
 	CaloriesCard,
 	HabitList,
 	HomeHeader,
-	MacrosCard,
+	MacrosCard
 } from '@/components/home';
 import { Carousel, Container, Text } from '@/components/ui';
 import { getTimeOfDay } from '@/lib/time';
@@ -17,14 +17,14 @@ export default function Home() {
 		<SafeAreaView>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
-				overScrollMode="never"
+				overScrollMode='never'
 			>
 				<Container>
 					<HomeHeader />
-					<Text variant="title/xlarge" className="mb-8">
+					<Text variant='title/xlarge' className='mb-8'>
 						Good {timeOfDay}
 					</Text>
-					<Link href="/body-composition">asd</Link>
+					<Link href='/(auth)/(body-composition)'>asd</Link>
 					<Carousel swipeTreshold={50}>
 						<CaloriesCard />
 						<MacrosCard />

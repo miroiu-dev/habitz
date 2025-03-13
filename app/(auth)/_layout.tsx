@@ -5,19 +5,18 @@ export default function Layout() {
 	return (
 		<Stack
 			screenOptions={{
-				header: props => <Header {...props} />,
+				header: props => <Header {...props} />
 			}}
 		>
-			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+			<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 			<Stack.Screen
-				name="(modal)/improve"
-				options={{ title: 'Improve yourself' }}
+				name='(body-composition)'
+				options={{ title: 'Body composition', headerShown: true }}
 			/>
 			<Stack.Screen
-				name="(in-progress)/body-composition"
-				options={{ title: 'Body composition' }}
+				name='(modal)/new-habit'
+				options={{ title: 'New habit' }}
 			/>
-			<Stack.Screen name="(in-progress)/new-habit" />
 		</Stack>
 	);
 }

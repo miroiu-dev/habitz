@@ -19,3 +19,7 @@ export function getTimeOfDay() {
 export function getToday() {
 	return DateTime.now().toFormat('dd MMMM, yyyy');
 }
+
+export function formatHistoryDate(date: Date) {
+	return DateTime.fromJSDate(date).toFormat('MMMM dd, yyyy HH:mm:ss');
+}

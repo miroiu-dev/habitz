@@ -1,7 +1,7 @@
 import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
 import type { Muscle } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { memo, useCallback } from 'react';
+import { memo, useMemo } from 'react';
 import { Pressable, type PressableProps, View } from 'react-native';
 import { Text } from '../ui';
 import { EllipseCorner } from './ellipse-corner';
@@ -11,7 +11,6 @@ type Side = 'L' | 'R';
 type MeasurementCard = {
 	label: string;
 	muscle: Muscle;
-	value: number;
 	unit?: string;
 	side?: Side;
 	isActive?: boolean;
@@ -21,7 +20,6 @@ type MeasurementCard = {
 export const MeasurementCard = memo(
 	({
 		label,
-		value,
 		unit = 'cm',
 		side,
 		onSelectMuscle,
@@ -30,10 +28,16 @@ export const MeasurementCard = memo(
 		isActive,
 		...props
 	}: MeasurementCard) => {
+		const value = useBodyCompositionStore(
+			state => state[muscle as keyof typeof state] as number
+		);
+
+		const displayValue = useMemo(() => value.toFixed(1), [value]);
+
 		return (
 			<Pressable
 				className={cn(
-					'relative flex gap-1 p-2 pr-6 rounded-lg bg-primary-1 overflow-hidden',
+					'relative flex gap-1 p-2 pr-6 rounded-lg bg-primary-1 overflow-hidden max-w-24 min-w-24',
 					isActive && 'bg-primary-20'
 				)}
 				onPress={event => {
@@ -44,7 +48,7 @@ export const MeasurementCard = memo(
 			>
 				<Text variant="body/small">{label}</Text>
 				<View className="flex flex-row items-baseline gap-1">
-					<Text variant="title/base">{value}</Text>
+					<Text variant="title/base">{displayValue}</Text>
 					<Text variant="body/small">{unit}</Text>
 				</View>
 

@@ -8,7 +8,7 @@ export const ColorsLight = {
 		40: '#DB049A',
 		50: '#C400A2',
 		60: '#A700A3',
-		70: '#770087',
+		70: '#770087'
 	},
 	neutral: {
 		0: '#FFFFFF',
@@ -19,7 +19,7 @@ export const ColorsLight = {
 		40: '#A8A9B2',
 		50: '#717188',
 		60: '#323241',
-		70: '#000000',
+		70: '#000000'
 	},
 	positive: '#29E682',
 	danger: '#F34E4E',
@@ -28,15 +28,16 @@ export const ColorsLight = {
 	blue: {
 		30: '#6D9BFF',
 		40: '#0083D6',
-		50: '#007EA6',
+		50: '#007EA6'
 	},
 	green: {
 		30: '#37FF57',
 		40: '#02BFB0',
-		50: '#279E82',
+		50: '#279E82'
 	},
 	yellow: '#FFF500',
 	gold: '#FFCD1B',
+	white: '#FFFFFF'
 };
 
 export const ColorsDark = {};

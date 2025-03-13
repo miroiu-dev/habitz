@@ -1,1 +1,1 @@
-export { LightTheme } from './router-theme';
+export { LightTheme } from './router';
