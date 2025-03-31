@@ -1,73 +1,85 @@
 import { Header } from '@/components/router';
-import { Stack } from 'expo-router';
+import { Text } from '@/components/ui';
+import { useSession } from '@/providers/auth-context';
+import { Redirect, Stack } from 'expo-router';
 
 export default function Layout() {
+	const { session, isLoading } = useSession();
+
+	if (isLoading) {
+		return <Text>Loading...</Text>;
+	}
+
+	if (session) {
+		return <Redirect href='/(auth)/(tabs)' />;
+	}
+
 	return (
 		<Stack
 			screenOptions={{
-				header: props => <Header {...props} />,
+				header: props => <Header {...props} />
 			}}
 		>
 			<Stack.Screen
-				name="index"
+				name='index'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="log-in"
+				name='log-in'
 				options={{
-					title: 'Log in',
+					title: 'Log in'
 				}}
 			/>
 			<Stack.Screen
-				name="sign-up"
+				name='sign-up'
 				options={{
-					title: 'Sign up',
+					title: 'Sign up'
 				}}
 			/>
 
 			{/* Onboarding */}
 			<Stack.Screen
-				name="(onboarding)/welcome"
+				name='(onboarding)/welcome'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/goal"
+				name='(onboarding)/goal'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/activity-level"
+				name='(onboarding)/activity-level'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/weekly-goal"
+				name='(onboarding)/weekly-goal'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/you"
+				name='(onboarding)/you'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/create-account"
+				name='(onboarding)/create-account'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Stack.Screen
-				name="(onboarding)/account-created"
+				name='(onboarding)/account-created'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 		</Stack>

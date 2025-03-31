@@ -15,6 +15,7 @@ export { Carousel } from './carousel';
 export { ActionPresentationCard } from './action-presentation-card';
 export { RulerPicker } from './ruler-picker';
 export { BottomSheetModal } from './bottom-sheet-modal';
+export { Calendar } from './calendar';
 
 export * from './form';
 export * from './svg';

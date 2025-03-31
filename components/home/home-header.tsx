@@ -6,14 +6,14 @@ import { Badge, Icon, Logo } from '../ui';
 const stylesheet = StyleSheet.create({
 	avatar: {
 		width: 48,
-		height: 48,
-	},
+		height: 48
+	}
 });
 
 export function HomeHeader() {
 	return (
-		<View className="flex flex-row justify-between items-center mb-6">
-			<Link href="/(public)" asChild>
+		<View className='flex flex-row justify-between items-center mb-6'>
+			<Link href='/(auth)/(settings)/settings' asChild>
 				<TouchableOpacity>
 					<Image
 						style={stylesheet.avatar}
@@ -25,7 +25,7 @@ export function HomeHeader() {
 
 			<TouchableOpacity>
 				<Badge>
-					<Icon type="bell" />
+					<Icon type='bell' />
 				</Badge>
 			</TouchableOpacity>
 		</View>

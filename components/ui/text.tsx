@@ -14,12 +14,12 @@ export const text = cva('text-neutral-70', {
 			'title/medium': 'text-lg font-space-grotesk-bold',
 			'title/large': 'text-2xl font-space-grotesk-bold',
 			'title/xlarge': 'text-xlarge font-space-grotesk-bold',
-			custom: '',
-		},
+			custom: ''
+		}
 	},
 	defaultVariants: {
-		variant: 'body/base',
-	},
+		variant: 'body/base'
+	}
 });
 
 export type TextProps = PropsWithChildren<RNTextProps> &

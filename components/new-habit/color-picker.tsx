@@ -1,21 +1,12 @@
+import { HABIT_COLORS } from '@/constants';
 import { useState } from 'react';
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { Icon } from '../ui';
 
 type ColorPickerProps = {
 	colors?: string[];
 	onColorChange?: (color: string) => void;
 };
-
-const HABIT_COLORS = [
-	'#FF995F', // Orange
-	'#BF6DD8', // Purple
-	'#6D9BFF', // Light Blue
-	'#0083D6', // Blue
-	'#007EA6', // Dark Blue
-	'#02BFB0', // Teal
-	'#279E82' // Green
-];
 
 export function ColorPicker({
 	colors = HABIT_COLORS,
@@ -28,25 +19,21 @@ export function ColorPicker({
 			horizontal
 			showsHorizontalScrollIndicator={false}
 			bounces={false}
-			contentContainerClassName='gap-3'
+			overScrollMode='never'
+			contentContainerClassName='gap-4'
 			data={colors}
 			keyExtractor={item => item}
 			renderItem={({ item }) => (
-				<View>
-					<Pressable
-						onPress={() => {
-							setSelectedColor(item);
-							onColorChange?.(item);
-						}}
-						className='size-10 rounded-full'
-						style={{ backgroundColor: item }}
-					/>
-					{item === selectedColor && (
-						<View className='absolute top-1/2 right-2 -translate-y-1/2'>
-							<Icon type='checkCircle' />
-						</View>
-					)}
-				</View>
+				<Pressable
+					onPress={() => {
+						setSelectedColor(item);
+						onColorChange?.(item);
+					}}
+					className='size-10 rounded-full flex justify-center items-center'
+					style={{ backgroundColor: item }}
+				>
+					{item === selectedColor && <Icon type='checkCircle' />}
+				</Pressable>
 			)}
 		/>
 	);

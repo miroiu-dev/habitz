@@ -24,7 +24,7 @@ export default function Home() {
 					<Text variant='title/xlarge' className='mb-8'>
 						Good {timeOfDay}
 					</Text>
-					<Link href='/(auth)/(body-composition)'>asd</Link>
+					<Link href='/(auth)/(body-composition)'>body comp</Link>
 					<Carousel swipeTreshold={50}>
 						<CaloriesCard />
 						<MacrosCard />

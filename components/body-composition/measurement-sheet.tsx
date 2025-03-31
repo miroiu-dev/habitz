@@ -1,12 +1,10 @@
 import { useMeasurement } from '@/hooks/body-composition/useMeasurement';
-import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
 import { camelToFlat } from '@/lib/utils';
-import {
-	type BottomSheetProps,
-	type BottomSheetModal as RNBottomSheetModal,
-	useBottomSheetModal
+import type {
+	BottomSheetProps,
+	BottomSheetModal as RNBottomSheetModal
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomSheetModal, Button, RulerPicker, Text } from '../ui';
 

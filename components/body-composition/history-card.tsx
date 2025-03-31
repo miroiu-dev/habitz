@@ -19,17 +19,18 @@ type HistoryItemProps = {
 	item: History;
 };
 
-const HistoryItem = ({ item }: HistoryItemProps) => {
+const HistoryItem = memo(({ item }: HistoryItemProps) => {
 	return (
 		<View className='gap-2'>
 			<Text variant='title/base'>{item.label}</Text>
 			<Text>{item.value ?? '--'}</Text>
 		</View>
 	);
-};
+});
 
 export const HistoryCard = memo(({ date, data }: HistoryCardProps) => {
 	// use toast with actions to delete
+
 	return (
 		<View className='bg-primary-1 p-4 rounded-lg'>
 			<View className='flex flex-row items-center justify-between mb-6'>
@@ -38,7 +39,9 @@ export const HistoryCard = memo(({ date, data }: HistoryCardProps) => {
 			</View>
 			<FlatList
 				data={data}
-				renderItem={HistoryItem}
+				renderItem={({ index, item }) => (
+					<HistoryItem item={item} key={index} />
+				)}
 				keyExtractor={({ id }) => String(id)}
 				horizontal
 				bounces={false}

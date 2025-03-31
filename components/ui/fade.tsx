@@ -20,17 +20,17 @@ export function Fade({
 	left = 0,
 	right = 0,
 	bottom = 0,
-	opacity = 0.7,
+	opacity = 0.7
 }: FadeProps) {
 	return (
 		<LinearGradient
 			colors={[
 				'rgba(255,255,255, 0.4)',
 				`rgba(255,255,255,${opacity})`,
-				ColorsLight.neutral[0],
+				ColorsLight.neutral[0]
 			]}
-			start={[0, 0.5]}
-			end={[1, 0.5]}
+			start={[0.5, 0]}
+			end={[0.5, 1]}
 			style={{
 				position: 'absolute',
 				top,
@@ -38,7 +38,7 @@ export function Fade({
 				right,
 				bottom,
 				height,
-				width,
+				width
 			}}
 		/>
 	);

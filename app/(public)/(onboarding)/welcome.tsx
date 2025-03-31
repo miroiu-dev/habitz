@@ -4,7 +4,7 @@ import {
 	FormInput,
 	FormRadioCard,
 	FormRadioCardGroup,
-	Text,
+	Text
 } from '@/components/ui';
 import { FormNumberInput } from '@/components/ui/form/form-number-input';
 import { useFormNavigation } from '@/hooks';
@@ -30,8 +30,8 @@ export default function Onboarding() {
 		defaultValues: {
 			age,
 			fullName,
-			gender,
-		},
+			gender
+		}
 	});
 
 	const { push } = useRouter();
@@ -41,7 +41,7 @@ export default function Onboarding() {
 		updateWelcomeData({
 			age: data.age,
 			fullName: data.fullName,
-			gender: data.gender,
+			gender: data.gender
 		});
 
 		push('/(public)/(onboarding)/goal');
@@ -51,29 +51,29 @@ export default function Onboarding() {
 		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
-				overScrollMode="never"
-				keyboardShouldPersistTaps="always"
-				keyboardDismissMode="none"
+				overScrollMode='never'
+				keyboardShouldPersistTaps='always'
+				keyboardDismissMode='none'
 				bottomOffset={80}
 			>
-				<Container className="h-full">
-					<Text variant="title/large">Welcome</Text>
-					<Text variant="title/medium" className="mt-8">
+				<Container className='h-full'>
+					<Text variant='title/large'>Welcome</Text>
+					<Text variant='title/medium' className='mt-8'>
 						What can we call you?
 					</Text>
-					<Text className="mt-1 mb-4">
+					<Text className='mt-1 mb-4'>
 						We’d like to get to know you.
 					</Text>
 
 					<FormInput
-						placeholder="Enter your full name"
+						placeholder='Enter your full name'
 						control={control}
-						name="fullName"
-						className=""
+						name='fullName'
+						className=''
 						{...register()}
 					/>
 
-					<Text variant="title/medium" className="mt-8">
+					<Text variant='title/medium' className='mt-8'>
 						Tell us a little about yourself.
 					</Text>
 					<Text>
@@ -81,18 +81,18 @@ export default function Onboarding() {
 						your calories needs.
 					</Text>
 
-					<FormRadioCardGroup control={control} name="gender">
-						<View className="flex flex-row my-4 gap-4">
-							<FormRadioCard value="male" label="Male" />
-							<FormRadioCard value="female" label="Female" />
+					<FormRadioCardGroup control={control} name='gender'>
+						<View className='flex flex-row my-4 gap-4'>
+							<FormRadioCard value={0} label='Male' />
+							<FormRadioCard value={1} label='Female' />
 						</View>
 					</FormRadioCardGroup>
 
 					<FormNumberInput
-						label="How old are you?"
-						placeholder="Enter your age"
+						label='How old are you?'
+						placeholder='Enter your age'
 						control={control}
-						name="age"
+						name='age'
 						maxLength={2}
 						{...register(true)}
 					/>

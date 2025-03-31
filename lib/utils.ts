@@ -1,3 +1,4 @@
+import type { ReminderData } from '@/components/new-habit/reminder';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import type { Muscle } from './types';
@@ -107,4 +108,8 @@ export function getWaistHipRatioText(waistHipRatio: string) {
 	}
 
 	return 'High';
+}
+
+export function formatReminder(reminder: ReminderData) {
+	return `${reminder.hours.toString().padStart(2, '0')}:${reminder.minutes.toString().padStart(2, '0')}`;
 }

@@ -3,11 +3,11 @@ import {
 	Container,
 	FormRadioCard,
 	FormRadioCardGroup,
-	Text,
+	Text
 } from '@/components/ui';
 import {
 	type ActivityLevelSchema,
-	activityLevelSchema,
+	activityLevelSchema
 } from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,15 +27,15 @@ export default function ActivityLevel() {
 	const { control, handleSubmit } = useForm<ActivityLevelSchema>({
 		resolver: zodResolver(activityLevelSchema),
 		defaultValues: {
-			activityLevel,
-		},
+			activityLevel
+		}
 	});
 
 	const { push } = useRouter();
 
 	const onSubmit: SubmitHandler<ActivityLevelSchema> = data => {
 		updateActivityLevel({
-			activityLevel: data.activityLevel,
+			activityLevel: data.activityLevel
 		});
 
 		if (goal === 'maintain') {
@@ -50,45 +50,45 @@ export default function ActivityLevel() {
 		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
-				overScrollMode="never"
-				keyboardShouldPersistTaps="always"
-				keyboardDismissMode="none"
+				overScrollMode='never'
+				keyboardShouldPersistTaps='always'
+				keyboardDismissMode='none'
 				bottomOffset={80}
 			>
-				<Container className="h-full">
-					<Text variant="title/large">Activity level</Text>
+				<Container className='h-full'>
+					<Text variant='title/large'>Activity level</Text>
 
-					<Text variant="title/medium" className="mt-8">
+					<Text variant='title/medium' className='mt-8'>
 						What is your baseline activity level?
 					</Text>
-					<Text className="mt-1">
+					<Text className='mt-1'>
 						Not including workouts — we count that separately.
 					</Text>
 
-					<FormRadioCardGroup name="activityLevel" control={control}>
-						<View className="flex my-4 gap-4">
+					<FormRadioCardGroup name='activityLevel' control={control}>
+						<View className='flex my-4 gap-4'>
 							<FormRadioCard
-								value="sedentary"
-								label="Not very active"
-								description="Spend most of the day sitting (e.g bankteller, desk job)."
+								value={0}
+								label='Not very active'
+								description='Spend most of the day sitting (e.g bankteller, desk job).'
 							/>
 
 							<FormRadioCard
-								value="light"
-								label="Lightly active"
-								description="Spend a good part of the day on your feet (e,g teacher)."
+								value={1}
+								label='Lightly active'
+								description='Spend a good part of the day on your feet (e,g teacher).'
 							/>
 
 							<FormRadioCard
-								value="active"
-								label="Active"
-								description="Spend a good part of the day doing some physical activity."
+								value={2}
+								label='Active'
+								description='Spend a good part of the day doing some physical activity.'
 							/>
 
 							<FormRadioCard
-								value="veryActive"
-								label="Very active"
-								description="Spend a good part of the day doing heavy physical activity."
+								value={3}
+								label='Very active'
+								description='Spend a good part of the day doing heavy physical activity.'
 							/>
 						</View>
 					</FormRadioCardGroup>

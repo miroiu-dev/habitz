@@ -15,6 +15,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
 
 import '../global.css';
+import { SessionProvider } from '@/providers/auth-context';
 
 preventAutoHideAsync();
 
@@ -42,7 +43,9 @@ export default function RootLayout() {
 				<ThemeProvider value={LightTheme}>
 					<SystemBars style='dark' />
 					<KeyboardProvider>
-						<Slot initialRouteName='(auth)' />
+						<SessionProvider>
+							<Slot initialRouteName='(auth)' />
+						</SessionProvider>
 					</KeyboardProvider>
 					<Toast config={toastConfig} />
 				</ThemeProvider>

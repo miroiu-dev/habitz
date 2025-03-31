@@ -8,27 +8,31 @@ type ToastParams = {
 	action?: () => void;
 	autoHide?: boolean;
 	position?: 'top' | 'bottom';
+	topOffset?: number;
+	bottomOffset?: number;
+	swipable?: boolean;
 };
 
 export const toastConfig: ToastConfig = {
 	success: props => <ToastComponent {...props} />,
-	error: props => <ToastComponent {...props} />,
+	error: props => <ToastComponent {...props} />
 };
 
-function error(params: ToastParams) {
+function danger(params: ToastParams) {
 	Toast.show({
 		text1: params.title,
 		text2: params.description,
 		position: params.position,
 		autoHide: params.autoHide,
 		type: 'error',
-		swipeable: false,
+		swipeable: params.swipable ?? false,
 		visibilityTime: 2000,
-		topOffset: 32,
+		topOffset: params.topOffset ?? 32,
+		bottomOffset: params.bottomOffset ?? 32,
 		props: {
 			actionText: params.actionText,
-			action: params.action,
-		},
+			action: params.action
+		}
 	});
 }
 
@@ -39,17 +43,18 @@ function success(params: ToastParams) {
 		position: params.position,
 		autoHide: params.autoHide,
 		type: 'success',
-		swipeable: false,
+		swipeable: params.swipable ?? false,
 		visibilityTime: 2000,
-		topOffset: 32,
+		topOffset: params.topOffset ?? 32,
+		bottomOffset: params.bottomOffset ?? 32,
 		props: {
 			actionText: params.actionText,
-			action: params.action,
-		},
+			action: params.action
+		}
 	});
 }
 
 export const toast = {
-	error,
-	success,
+	danger,
+	success
 };

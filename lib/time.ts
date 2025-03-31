@@ -23,3 +23,7 @@ export function getToday() {
 export function formatHistoryDate(date: Date) {
 	return DateTime.fromJSDate(date).toFormat('MMMM dd, yyyy HH:mm:ss');
 }
+
+export function getHistoryDate() {
+	return DateTime.now().toFormat('MMMM yyyy');
+}

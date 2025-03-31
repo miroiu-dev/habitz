@@ -3,17 +3,17 @@ import { Tabs } from 'expo-router';
 
 export default function AppLayout() {
 	return (
-		<Tabs initialRouteName="index" tabBar={props => <TabBar {...props} />}>
+		<Tabs initialRouteName='index' tabBar={props => <TabBar {...props} />}>
 			<Tabs.Screen
-				name="index"
+				name='index'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 			<Tabs.Screen
-				name="statistics"
+				name='statistics'
 				options={{
-					headerShown: false,
+					headerShown: false
 				}}
 			/>
 		</Tabs>

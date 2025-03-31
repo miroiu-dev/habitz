@@ -7,7 +7,7 @@ import Animated, {
 	clamp,
 	runOnJS,
 	useAnimatedScrollHandler,
-	useSharedValue,
+	useSharedValue
 } from 'react-native-reanimated';
 import { itemSize, rulerWidth, scale, width } from './constants';
 import { Measurement } from './measurement';
@@ -26,7 +26,7 @@ export function RulerPicker({
 	minValue = 0,
 	maxValue = 240,
 	initialValue = 0,
-	step = 0.1,
+	step = 0.1
 }: RulerProps) {
 	const data = useMemo(
 		() => generateScaleData(minValue, maxValue, step),
@@ -52,7 +52,7 @@ export function RulerPicker({
 			if (onChange) {
 				runOnJS(onChange)(scrollX.value);
 			}
-		},
+		}
 	});
 
 	const getItemLayout = useCallback(
@@ -62,7 +62,7 @@ export function RulerPicker({
 			return {
 				length,
 				offset: length * index,
-				index,
+				index
 			};
 		},
 		[data]
@@ -78,7 +78,7 @@ export function RulerPicker({
 					bounces={false}
 					horizontal
 					showsHorizontalScrollIndicator={false}
-					decelerationRate="normal"
+					decelerationRate='normal'
 					getItemLayout={getItemLayout}
 					snapToInterval={itemSize}
 					contentContainerStyle={styles.flatListContent}
@@ -94,14 +94,13 @@ export function RulerPicker({
 					scrollEventThrottle={16}
 					removeClippedSubviews={false}
 					initialNumToRender={50}
-					maxToRenderPerBatch={25}
-					windowSize={21}
-					updateCellsBatchingPeriod={10}
+					maxToRenderPerBatch={50}
+					windowSize={30}
 					contentOffset={{ x: initialOffset, y: 0 }}
 					persistentScrollbar={true}
 					maintainVisibleContentPosition={{
 						minIndexForVisible: 0,
-						autoscrollToTopThreshold: 10,
+						autoscrollToTopThreshold: 10
 					}}
 				/>
 				<Indicator />
@@ -124,38 +123,38 @@ const GradientOverlay = memo(() => (
 		colors={['#fff', 'transparent', '#fff']}
 		start={[0, 0.5]}
 		end={[1, 0.5]}
-		pointerEvents="none"
+		pointerEvents='none'
 	/>
 ));
 
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	animatedText: {
 		fontSize: Math.round(24 * scale) / scale,
 		fontWeight: '500',
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	flatListContent: {
 		paddingHorizontal:
 			Math.round((width / 2 - rulerWidth / 2) * scale) / scale,
-		paddingBottom: 40,
+		paddingBottom: 40
 	},
 	indicatorContainer: {
 		alignSelf: 'center',
 		position: 'absolute',
-		gap: 4,
+		gap: 4
 	},
 	indicator: {
 		width: rulerWidth,
 		height: Math.round(68 * scale) / scale,
-		backgroundColor: ColorsLight.primary[30],
+		backgroundColor: ColorsLight.primary[30]
 	},
 	indicatorDot: {
 		width: rulerWidth,
 		height: rulerWidth,
 		backgroundColor: ColorsLight.primary[30],
-		borderRadius: 9999,
-	},
+		borderRadius: 9999
+	}
 });

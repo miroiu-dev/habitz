@@ -1,9 +1,10 @@
 import {
 	getBodyMassIndex,
 	getMinimumWeight,
-	isUnderweight,
+	isUnderweight
 } from '@/lib/health';
 import { z } from 'zod';
+import { Goal } from './goalSchema';
 
 export const youSchema = z.object({
 	weight: z.coerce
@@ -20,15 +21,15 @@ export const youSchema = z.object({
 			454,
 			'Your goal weight must be between your current weight and 454kg.'
 		)
-		.optional(),
+		.optional()
 });
 
 export const youWithGoalSchema = youSchema
 	.extend({
-		goal: z.enum(['lose', 'maintain', 'gain']),
+		goal: z.nativeEnum(Goal)
 	})
 	.superRefine((data, ctx) => {
-		if (data.goal === 'maintain') {
+		if (data.goal === Goal.maintain) {
 			return;
 		}
 
@@ -36,7 +37,7 @@ export const youWithGoalSchema = youSchema
 			return ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				path: ['goalWeight'],
-				message: 'Please enter your height and weight first.',
+				message: 'Please enter your height and weight first.'
 			});
 		}
 
@@ -44,7 +45,7 @@ export const youWithGoalSchema = youSchema
 			return ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				path: ['goalWeight'],
-				message: 'Please enter an estimated goal weight.',
+				message: 'Please enter an estimated goal weight.'
 			});
 		}
 
@@ -53,20 +54,20 @@ export const youWithGoalSchema = youSchema
 				code: z.ZodIssueCode.custom,
 				path: ['goalWeight'],
 				message:
-					'Your goal weight should be different from your current weight.',
+					'Your goal weight should be different from your current weight.'
 			});
 		}
 
 		const height = data.height / 100;
 		const bmi = getBodyMassIndex(data.goalWeight, height);
 
-		if (data.goal === 'lose') {
+		if (data.goal === Goal.lose) {
 			if (data.goalWeight >= data.weight) {
 				return ctx.addIssue({
 					code: z.ZodIssueCode.custom,
 					path: ['goalWeight'],
 					message:
-						'Your goal weight is higher than your current weight.',
+						'Your goal weight is higher than your current weight.'
 				});
 			}
 
@@ -76,16 +77,16 @@ export const youWithGoalSchema = youSchema
 				return ctx.addIssue({
 					code: z.ZodIssueCode.custom,
 					path: ['goalWeight'],
-					message: `This goal weight is considered underweight for your height. Please enter a goal weight of ${minimumWeight}kg or higher.`,
+					message: `This goal weight is considered underweight for your height. Please enter a goal weight of ${minimumWeight}kg or higher.`
 				});
 			}
 		}
 
-		if (data.goal === 'gain' && data.goalWeight <= data.weight) {
+		if (data.goal === Goal.gain && data.goalWeight <= data.weight) {
 			return ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				path: ['goalWeight'],
-				message: 'This goal weight is lower than your current weight.',
+				message: 'This goal weight is lower than your current weight.'
 			});
 		}
 	});

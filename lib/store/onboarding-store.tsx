@@ -1,11 +1,14 @@
 import { create } from 'zustand/react';
 
-import type {
-	ActivityLevelSchema,
-	GoalSchema,
-	WeeklyGoalSchema,
-	WelcomeSchema,
-	YouSchema,
+import {
+	ActivityLevel,
+	type ActivityLevelSchema,
+	Gender,
+	Goal,
+	type GoalSchema,
+	type WeeklyGoalSchema,
+	type WelcomeSchema,
+	type YouSchema
 } from '../schemas/auth';
 
 type OnboardingData = WelcomeSchema &
@@ -25,10 +28,10 @@ type OnboardingActions = {
 export const useOnboardingStore = create<OnboardingData & OnboardingActions>(
 	set => ({
 		age: Number.NaN,
-		activityLevel: 'active',
+		activityLevel: ActivityLevel.active,
 		fullName: '',
-		gender: 'male',
-		goal: 'maintain',
+		gender: Gender.male,
+		goal: Goal.maintain,
 		goalWeight: Number.NaN,
 		height: Number.NaN,
 		weeklyGoal: 0.25,
@@ -37,6 +40,6 @@ export const useOnboardingStore = create<OnboardingData & OnboardingActions>(
 		updateActivityLevel: data => set(data),
 		updateGoal: data => set(data),
 		updateWeeklyGoal: data => set(data),
-		updateYou: data => set(data),
+		updateYou: data => set(data)
 	})
 );

@@ -18,6 +18,7 @@ export default function BodyComposition() {
 		<SafeAreaView edges={['bottom']}>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
+				bounces={false}
 				overScrollMode='never'
 			>
 				<Container className='pt-0 pb-0'>

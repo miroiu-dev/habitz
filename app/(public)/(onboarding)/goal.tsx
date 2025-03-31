@@ -3,7 +3,7 @@ import {
 	Container,
 	FormRadioCard,
 	FormRadioCardGroup,
-	Text,
+	Text
 } from '@/components/ui';
 import { type GoalSchema, goalSchema } from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
@@ -21,15 +21,15 @@ export default function Goal() {
 	const { control, handleSubmit } = useForm<GoalSchema>({
 		resolver: zodResolver(goalSchema),
 		defaultValues: {
-			goal,
-		},
+			goal
+		}
 	});
 
 	const { push } = useRouter();
 
 	const onSubmit: SubmitHandler<GoalSchema> = data => {
 		updateGoalData({
-			goal: data.goal,
+			goal: data.goal
 		});
 
 		push('/(public)/(onboarding)/activity-level');
@@ -39,29 +39,26 @@ export default function Goal() {
 		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
-				overScrollMode="never"
-				keyboardShouldPersistTaps="always"
-				keyboardDismissMode="none"
+				overScrollMode='never'
+				keyboardShouldPersistTaps='always'
+				keyboardDismissMode='none'
 				bottomOffset={80}
 			>
-				<Container className="h-full">
-					<Text variant="title/large">Goal</Text>
+				<Container className='h-full'>
+					<Text variant='title/large'>Goal</Text>
 
-					<Text variant="title/medium" className="mt-8">
+					<Text variant='title/medium' className='mt-8'>
 						Let’s start with your goal.
 					</Text>
-					<Text className="mt-1">
+					<Text className='mt-1'>
 						Select the one that matters most to you.
 					</Text>
 
-					<FormRadioCardGroup name="goal" control={control}>
-						<View className="flex my-4 gap-4">
-							<FormRadioCard label="Lose weight" value="lose" />
-							<FormRadioCard
-								label="Maintain weight"
-								value="maintain"
-							/>
-							<FormRadioCard label="Gain weight" value="gain" />
+					<FormRadioCardGroup name='goal' control={control}>
+						<View className='flex my-4 gap-4'>
+							<FormRadioCard label='Lose weight' value={0} />
+							<FormRadioCard label='Maintain weight' value={1} />
+							<FormRadioCard label='Gain weight' value={2} />
 						</View>
 					</FormRadioCardGroup>
 				</Container>

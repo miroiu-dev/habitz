@@ -6,7 +6,7 @@ export const createAccountSchema = z
 			.string({ message: 'Please enter your email address.' })
 			.email('Please enter a valid email address.'),
 		password: z
-			.string()
+			.string({ message: 'Please enter your password.' })
 			.min(8, 'Password must be at least 8 characters long.')
 			.max(20, 'Password must be at most 20 characters long.')
 			.regex(
@@ -24,11 +24,11 @@ export const createAccountSchema = z
 			),
 		confirmPassword: z
 			.string({ message: 'Please confirm your password.' })
-			.nonempty('Please confirm your password.'),
+			.nonempty('Please confirm your password.')
 	})
 	.refine(({ confirmPassword, password }) => password === confirmPassword, {
 		message: 'Passwords do not match.',
-		path: ['confirmPassword'],
+		path: ['confirmPassword']
 	});
 
 export type CreateAccountSchema = z.infer<typeof createAccountSchema>;

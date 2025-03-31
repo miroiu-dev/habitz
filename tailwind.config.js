@@ -55,7 +55,8 @@ module.exports = {
 			'space-grotesk-bold': 'SpaceGrotesk_Bold',
 			'dmsans-medium': 'DMSans_Medium',
 			'dmsans-regular': 'DMSans_Regular',
-			syne: 'Syne_Bold'
+			syne: 'Syne_Bold',
+			'smooch-sans': 'SmoochSans'
 		}
 	},
 	plugins: []
