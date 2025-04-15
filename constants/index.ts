@@ -11,7 +11,7 @@ export const HABIT_ICONS: Icon[] = [
 	'location',
 	'palette',
 	'run'
-];
+] as const;
 
 export const HABIT_COLORS = [
 	'#FF995F', // Orange
@@ -21,7 +21,7 @@ export const HABIT_COLORS = [
 	'#007EA6', // Dark Blue
 	'#02BFB0', // Teal
 	'#279E82' // Green
-];
+] as const;
 
 export const HABIT_SCHEDULES = [
 	{ label: 'S', value: 0 },
@@ -31,4 +31,26 @@ export const HABIT_SCHEDULES = [
 	{ label: 'T', value: 4 },
 	{ label: 'F', value: 5 },
 	{ label: 'S', value: 6 }
-];
+] as const;
+
+
+export const MUSCLE_MAP = {
+	Neck: 'neck',
+	Shoulder: 'shoulder',
+	Chest: 'chest',
+	Biceps: {
+		L: 'leftBiceps',
+		R: 'rightBiceps'
+	},
+	Abs: 'abs',
+	Waist: 'waist',
+	Hip: 'hip',
+	Tigh: {
+		L: 'leftTigh',
+		R: 'rightTigh'
+	},
+	Calf: {
+		L: 'leftCalf',
+		R: 'rightCalf'
+	}
+} as const;

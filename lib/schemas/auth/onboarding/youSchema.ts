@@ -30,7 +30,7 @@ export const youWithGoalSchema = youSchema
 	})
 	.superRefine((data, ctx) => {
 		if (data.goal === Goal.maintain) {
-			return;
+			return true;
 		}
 
 		if (!data.height || !data.weight) {

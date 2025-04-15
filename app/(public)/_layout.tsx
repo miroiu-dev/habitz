@@ -4,13 +4,13 @@ import { useSession } from '@/providers/auth-context';
 import { Redirect, Stack } from 'expo-router';
 
 export default function Layout() {
-	const { session, isLoading } = useSession();
+	const { session, isLoading, signupFlow } = useSession();
 
 	if (isLoading) {
 		return <Text>Loading...</Text>;
 	}
 
-	if (session) {
+	if (session && !signupFlow) {
 		return <Redirect href='/(auth)/(tabs)' />;
 	}
 

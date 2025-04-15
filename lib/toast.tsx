@@ -23,12 +23,12 @@ function danger(params: ToastParams) {
 		text1: params.title,
 		text2: params.description,
 		position: params.position,
-		autoHide: params.autoHide,
+		autoHide: params.autoHide ?? true,
 		type: 'error',
 		swipeable: params.swipable ?? false,
-		visibilityTime: 2000,
-		topOffset: params.topOffset ?? 32,
-		bottomOffset: params.bottomOffset ?? 32,
+		visibilityTime: 4000,
+		topOffset: params.topOffset ?? 48,
+		bottomOffset: params.bottomOffset ?? 48,
 		props: {
 			actionText: params.actionText,
 			action: params.action
@@ -41,12 +41,12 @@ function success(params: ToastParams) {
 		text1: params.title,
 		text2: params.description,
 		position: params.position,
-		autoHide: params.autoHide,
+		autoHide: params.autoHide ?? true,
 		type: 'success',
 		swipeable: params.swipable ?? false,
-		visibilityTime: 2000,
-		topOffset: params.topOffset ?? 32,
-		bottomOffset: params.bottomOffset ?? 32,
+		visibilityTime: 4000,
+		topOffset: params.topOffset ?? 48,
+		bottomOffset: params.bottomOffset ?? 48,
 		props: {
 			actionText: params.actionText,
 			action: params.action

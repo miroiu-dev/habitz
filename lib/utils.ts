@@ -1,7 +1,9 @@
 import type { ReminderData } from '@/components/new-habit/reminder';
+import { MUSCLE_MAP } from '@/constants';
 import { type ClassValue, clsx } from 'clsx';
+import { HTTPError } from 'ky';
 import { twMerge } from 'tailwind-merge';
-import type { Muscle } from './types';
+import type { ApiError, ErrorResponse, Muscle } from './types';
 
 export function cn(...classNames: ClassValue[]) {
 	return twMerge(clsx(classNames));
@@ -33,31 +35,10 @@ export function camelToFlat(str: string) {
 	return str.replace(/([A-Z])/g, ' $1').toLowerCase();
 }
 
-export const muscleMap = {
-	Neck: 'neck',
-	Shoulder: 'shoulder',
-	Chest: 'chest',
-	Biceps: {
-		L: 'leftBiceps',
-		R: 'rightBiceps'
-	},
-	Abs: 'abs',
-	Waist: 'waist',
-	Hip: 'hip',
-	Tigh: {
-		L: 'leftTigh',
-		R: 'rightTigh'
-	},
-	Calf: {
-		L: 'leftCalf',
-		R: 'rightCalf'
-	}
-} as const;
-
-export type MuscleKey = keyof typeof muscleMap;
+export type MuscleKey = keyof typeof MUSCLE_MAP;
 
 export function getMuscle(muscle: string, side?: 'L' | 'R'): Muscle {
-	const actualMuscle = muscleMap[muscle as MuscleKey];
+	const actualMuscle = MUSCLE_MAP[muscle as MuscleKey];
 
 	if (side && typeof actualMuscle === 'object') {
 		return actualMuscle[side];
@@ -112,4 +93,35 @@ export function getWaistHipRatioText(waistHipRatio: string) {
 
 export function formatReminder(reminder: ReminderData) {
 	return `${reminder.hours.toString().padStart(2, '0')}:${reminder.minutes.toString().padStart(2, '0')}`;
+}
+
+export async function formatError(error: unknown): Promise<ApiError> {
+	if (error instanceof HTTPError) {
+		const response = await error.response.json<ErrorResponse>();
+		console.error(response);
+
+		if (response) {
+			const validationError = response?.errors?.[0].description;
+
+			return {
+				title: response.title,
+				description: validationError ?? response.detail,
+				status: response.status
+			};
+		}
+
+		return {
+			description: error.message,
+			title: error.name,
+			status: 500
+		};
+	}
+
+	const otherError = error as Error;
+
+	return {
+		description: otherError.message,
+		title: otherError.name,
+		status: 500
+	};
 }

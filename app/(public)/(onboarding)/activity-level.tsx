@@ -7,6 +7,7 @@ import {
 } from '@/components/ui';
 import {
 	type ActivityLevelSchema,
+	Goal,
 	activityLevelSchema
 } from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
@@ -38,7 +39,7 @@ export default function ActivityLevel() {
 			activityLevel: data.activityLevel
 		});
 
-		if (goal === 'maintain') {
+		if (goal === Goal.maintain) {
 			push('/(public)/(onboarding)/you');
 			return;
 		}

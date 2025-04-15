@@ -1,2 +1,5 @@
 export * from './onboarding';
-export { loginSchema, type LoginSchema } from './loginSchema';
+export {
+	signInSchema,
+	type SignInSchema
+} from './loginSchema';

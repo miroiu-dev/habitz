@@ -1,5 +1,6 @@
 import { LightTheme } from '@/components/theme/router';
 import { toastConfig } from '@/lib/toast';
+import { SessionProvider } from '@/providers/auth-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -13,9 +14,7 @@ import { SystemBars } from 'react-native-edge-to-edge';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
-
 import '../global.css';
-import { SessionProvider } from '@/providers/auth-context';
 
 preventAutoHideAsync();
 

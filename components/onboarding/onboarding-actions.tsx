@@ -9,11 +9,13 @@ import { Button, IconButton } from '../ui';
 type OnboardingActionsProps = {
 	onSubmit: (e?: BaseSyntheticEvent) => Promise<void>;
 	title?: string;
+	isSubmitting?: boolean;
 };
 
 export function OnboardingActions({
 	onSubmit,
 	title = 'Next',
+	isSubmitting = false
 }: OnboardingActionsProps) {
 	const { goBack } = useNavigation();
 
@@ -28,12 +30,18 @@ export function OnboardingActions({
 				)}
 			>
 				<IconButton
-					type="back"
+					type='back'
 					width={32}
 					height={32}
 					onPress={goBack}
+					disabled={isSubmitting}
 				/>
-				<Button title={title} className="flex-1" onPress={onSubmit} />
+				<Button
+					title={title}
+					className='flex-1'
+					onPress={onSubmit}
+					disabled={isSubmitting}
+				/>
 			</View>
 		</KeyboardStickyView>
 	);

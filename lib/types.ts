@@ -18,3 +18,36 @@ export type Muscle =
 	| 'shoulder'
 	| 'waist'
 	| 'hip';
+
+export type AuthenticationResponse = {
+	accessToken: string;
+	refreshToken: string;
+};
+
+type ValidationError = {
+	code: string;
+	description: string;
+	type: number;
+};
+
+export type ErrorResponse = {
+	title: string;
+	detail: string;
+	type: string;
+	status: number;
+	errors?: ValidationError[];
+};
+
+export type ApiError = {
+	title: string;
+	description: string;
+	status: number;
+};
+
+export type ApiReponse<T> = T | ApiError;
+
+export type User = {
+	id: number;
+	email: string;
+	fullName: string;
+};

@@ -5,7 +5,11 @@ import {
 	FormRadioCardGroup,
 	Text
 } from '@/components/ui';
-import { type GoalSchema, goalSchema } from '@/lib/schemas/auth';
+import {
+	Goal as GoalEnum,
+	type GoalSchema,
+	goalSchema
+} from '@/lib/schemas/auth';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
@@ -56,9 +60,18 @@ export default function Goal() {
 
 					<FormRadioCardGroup name='goal' control={control}>
 						<View className='flex my-4 gap-4'>
-							<FormRadioCard label='Lose weight' value={0} />
-							<FormRadioCard label='Maintain weight' value={1} />
-							<FormRadioCard label='Gain weight' value={2} />
+							<FormRadioCard
+								label='Lose weight'
+								value={GoalEnum.lose}
+							/>
+							<FormRadioCard
+								label='Maintain weight'
+								value={GoalEnum.maintain}
+							/>
+							<FormRadioCard
+								label='Gain weight'
+								value={GoalEnum.gain}
+							/>
 						</View>
 					</FormRadioCardGroup>
 				</Container>

@@ -1,8 +1,7 @@
 import { Button, Container, FormInput, Illustration } from '@/components/ui';
 import { useFormNavigation } from '@/hooks';
-import { type LoginSchema, loginSchema } from '@/lib/schemas/auth';
-import { toast } from '@/lib/toast';
-import { delay } from '@/lib/utils';
+import { type SignInSchema, signInSchema } from '@/lib/schemas/auth';
+import { useSession } from '@/providers/auth-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
@@ -10,54 +9,52 @@ export default function Login() {
 	const {
 		control,
 		handleSubmit,
-		formState: { isSubmitting },
-	} = useForm<LoginSchema>({
-		resolver: zodResolver(loginSchema),
+		formState: { isSubmitting }
+	} = useForm<SignInSchema>({
+		resolver: zodResolver(signInSchema),
 		defaultValues: {
 			email: '',
-			password: '',
-		},
+			password: ''
+		}
 	});
 
 	const { register } = useFormNavigation();
+	const { signIn } = useSession();
 
-	const onSubmit: SubmitHandler<LoginSchema> = async data => {
-		await delay(2000);
-		toast.success({ title: 'Logged in successfully' });
-	};
+	const onSubmit: SubmitHandler<SignInSchema> = async data =>
+		await signIn(data);
 
 	return (
 		<>
-			<Container className="gap-4">
+			<Container className='gap-4'>
 				<FormInput
-					label="Email address"
+					label='Email address'
 					control={control}
-					name="email"
-					keyboardType="email-address"
+					name='email'
+					keyboardType='email-address'
 					{...register()}
 				/>
 				<FormInput
-					label="Password"
+					label='Password'
 					control={control}
-					name="password"
+					name='password'
 					secureTextEntry
 					{...register(true)}
 				/>
 				<Button
-					title="Log in"
+					title='Log in'
 					onPress={handleSubmit(onSubmit)}
 					disabled={isSubmitting}
 				/>
-				<Button title="Forgot password?" variant="tertiary" />
 			</Container>
 			<Illustration
-				type="cat"
+				type='cat'
 				style={{
 					margin: 'auto',
 					position: 'absolute',
 					bottom: 0,
 					left: '50%',
-					transform: [{ translateX: '-50%' }],
+					transform: [{ translateX: '-50%' }]
 				}}
 			/>
 		</>

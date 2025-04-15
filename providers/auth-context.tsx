@@ -1,45 +1,122 @@
 import { useStorageState } from '@/hooks/useStorageState';
-import { type PropsWithChildren, createContext, useContext } from 'react';
+import { tokenManager } from '@/lib/auth';
+import type { SignInSchema, SignUpSchema } from '@/lib/schemas/auth';
+import { signIn, signUp } from '@/lib/services/auth-service';
+import { toast } from '@/lib/toast';
+import { isError } from '@/lib/type-guards';
+import { useRouter } from 'expo-router';
+import {
+	type PropsWithChildren,
+	createContext,
+	useContext,
+	useEffect
+} from 'react';
 
-const AuthContext = createContext<{
-	signIn: () => void;
+type AuthContextProps = {
+	signIn: (data: SignInSchema) => Promise<void>;
+	signUp: (data: SignUpSchema) => Promise<void>;
 	signOut: () => void;
+	closeSignupFlow: () => void;
 	session?: string | null;
+	signupFlow: boolean;
 	isLoading: boolean;
-}>({
-	signIn: () => null,
-	signOut: () => null,
-	session: null,
-	isLoading: false
-});
+};
+
+const AuthContext = createContext<AuthContextProps | null>(null);
 
 export function useSession() {
-	const value = useContext(AuthContext);
+	const ctx = useContext(AuthContext);
 
-	if (process.env.NODE_ENV !== 'production') {
-		if (!value) {
-			throw new Error(
-				'useSession must be wrapped in a <SessionProvider />'
-			);
-		}
+	if (!ctx) {
+		throw new Error('useSession must be wrapped in a <SessionProvider />');
 	}
 
-	return value;
+	return ctx;
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-	const [[isLoading, session], setSession] = useStorageState('session');
+	const [[accessTokenLoading, accessToken], setAccessToken] =
+		useStorageState('accessToken');
+	const [[refreshTokenLoading, refreshToken], setRefreshToken] =
+		useStorageState('refreshToken');
+	const [[signupFlowLoading, signupFlow], setSignupFlow] =
+		useStorageState('signupFlow');
+	const router = useRouter();
+
+	useEffect(() => {
+		const unsubscribe = tokenManager.subscribe(
+			({ accessToken, refreshToken }) => {
+				setAccessToken(accessToken);
+				setRefreshToken(refreshToken);
+			}
+		);
+
+		return () => unsubscribe();
+	}, [setAccessToken, setRefreshToken]);
+
+	const session = accessToken && refreshToken;
+	const isLoading =
+		accessTokenLoading || refreshTokenLoading || signupFlowLoading;
 
 	return (
 		<AuthContext.Provider
 			value={{
-				signIn: () => {
-					setSession('xxx');
+				signIn: async (data: SignInSchema) => {
+					const response = await signIn(data);
+
+					if (isError(response)) {
+						toast.danger({
+							title: response.title,
+							description: response.description
+						});
+
+						return;
+					}
+
+					setAccessToken(response.accessToken);
+					setRefreshToken(response.refreshToken);
+
+					tokenManager.setTokens(
+						response.accessToken,
+						response.refreshToken
+					);
+
+					router.replace('/(auth)/(tabs)');
+				},
+				signUp: async (data: SignUpSchema) => {
+					const response = await signUp(data);
+
+					if (isError(response)) {
+						toast.danger({
+							title: response.title,
+							description: response.description
+						});
+
+						return;
+					}
+
+					setAccessToken(response.accessToken);
+					setRefreshToken(response.refreshToken);
+
+					tokenManager.setTokens(
+						response.accessToken,
+						response.refreshToken
+					);
+
+					setSignupFlow('true');
+					router.replace('/(public)/(onboarding)/account-created');
 				},
 				signOut: () => {
-					setSession(null);
+					setAccessToken(null);
+					setRefreshToken(null);
+
+					router.replace('/(public)');
+				},
+				closeSignupFlow: () => {
+					setSignupFlow('false');
 				},
 				session,
+				signupFlow: signupFlow === 'true',
 				isLoading
 			}}
 		>

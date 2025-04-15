@@ -2,10 +2,10 @@ import { OnboardingActions } from '@/components/onboarding/onboarding-actions';
 import { Container, Text } from '@/components/ui';
 import { FormNumberInput } from '@/components/ui/form/form-number-input';
 import { useFormNavigation } from '@/hooks';
-import type { YouSchema } from '@/lib/schemas/auth';
+import { Goal } from '@/lib/schemas/auth';
 import {
 	type YouWithGoalSchema,
-	youWithGoalSchema,
+	youWithGoalSchema
 } from '@/lib/schemas/auth/onboarding/youSchema';
 import { useOnboardingStore } from '@/lib/store/onboarding-store';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,22 +25,21 @@ export default function You() {
 	const { control, handleSubmit } = useForm<YouWithGoalSchema>({
 		resolver: zodResolver(youWithGoalSchema),
 		defaultValues: {
-			goalWeight,
 			height,
 			weight,
 			goal,
-		},
+			goalWeight: goal === Goal.maintain ? undefined : goalWeight
+		}
 	});
 
 	const { register } = useFormNavigation();
-
 	const { push } = useRouter();
 
-	const onSubmit: SubmitHandler<YouSchema> = data => {
+	const onSubmit: SubmitHandler<YouWithGoalSchema> = data => {
 		updateYou({
 			goalWeight: data.goalWeight,
 			height: data.height,
-			weight: data.weight,
+			weight: data.weight
 		});
 
 		push('/(public)/(onboarding)/create-account');
@@ -50,41 +49,41 @@ export default function You() {
 		<SafeAreaView style={{ flex: 1 }}>
 			<KeyboardAwareScrollView
 				showsVerticalScrollIndicator={false}
-				overScrollMode="never"
-				keyboardShouldPersistTaps="always"
-				keyboardDismissMode="none"
+				overScrollMode='never'
+				keyboardShouldPersistTaps='always'
+				keyboardDismissMode='none'
 				bottomOffset={80}
 			>
-				<Container className="h-full">
-					<Text variant="title/large">You</Text>
+				<Container className='h-full'>
+					<Text variant='title/large'>You</Text>
 
-					<Text variant="title/medium" className="mt-8 mb-6">
+					<Text variant='title/medium' className='mt-8 mb-6'>
 						Just a few more questions.
 					</Text>
 
-					<View className="flex gap-4">
+					<View className='flex gap-4'>
 						<FormNumberInput
-							label="How tall are you?"
-							placeholder="Enter your height"
+							label='How tall are you?'
+							placeholder='Enter your height'
 							control={control}
-							name="height"
+							name='height'
 							maxLength={3}
 							{...register()}
 						/>
 						<FormNumberInput
-							label="How much do you weigh?"
-							placeholder="Enter your weight"
+							label='How much do you weigh?'
+							placeholder='Enter your weight'
 							control={control}
-							name="weight"
+							name='weight'
 							maxLength={3}
 							{...register()}
 						/>
-						{goal !== 'maintain' && (
+						{goal !== Goal.maintain && (
 							<FormNumberInput
 								label="What's your goal weight?"
-								placeholder="Enter your goal weight"
+								placeholder='Enter your goal weight'
 								control={control}
-								name="goalWeight"
+								name='goalWeight'
 								maxLength={3}
 								{...register(true)}
 							/>

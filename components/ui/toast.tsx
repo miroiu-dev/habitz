@@ -11,10 +11,10 @@ type ToastButtonProps = PressableProps & {
 function ToastButton({ text, ...props }: ToastButtonProps) {
 	return (
 		<Pressable
-			className="flex flex-row items-center justify-center rounded-tr-2xl rounded-br-2xl bg-green-10 active:bg-neutral-30 h-full px-4"
+			className='flex flex-row items-center justify-center rounded-tr-2xl rounded-br-2xl bg-green-10 active:bg-neutral-30 h-full px-4'
 			{...props}
 		>
-			<Text variant="body/base" className="mt-0.5">
+			<Text variant='body/base' className='mt-0.5'>
 				{text}
 			</Text>
 		</Pressable>
@@ -31,7 +31,7 @@ export function Toast({
 	text1,
 	text2,
 	props,
-	hide,
+	hide
 }: ToastConfigParams<ToastProps>) {
 	const isSuccess = type === 'success';
 	const isError = type === 'error';
@@ -44,16 +44,16 @@ export function Toast({
 				isError && 'bg-danger'
 			)}
 		>
-			<View className="flex flex-row items-center pl-4 py-3 gap-2 flex-1">
-				{isSuccess && <Icon type="checkCircle" />}
-				{isError && <Icon type="crossCircle" />}
-				<View className="flex items-center justify-center">
+			<View className='flex flex-row items-center pl-4 py-3 gap-2 flex-1'>
+				{isSuccess && <Icon type='checkCircle' />}
+				{isError && <Icon type='crossCircle' />}
+				<View className='flex justify-center flex-shrink'>
 					{text1 && (
-						<Text variant="title/medium" className="leading-6">
+						<Text variant='title/medium' className='leading-6'>
 							{text1}
 						</Text>
 					)}
-					{text2 && <Text variant="body/base">{text2}</Text>}
+					{text2 && <Text variant='body/base'>{text2}</Text>}
 				</View>
 			</View>
 			{props?.action && (
