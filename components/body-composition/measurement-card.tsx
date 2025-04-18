@@ -1,4 +1,4 @@
-import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
+import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
 import type { Muscle } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { memo, useMemo } from 'react';
@@ -46,10 +46,10 @@ export const MeasurementCard = memo(
 				}}
 				{...props}
 			>
-				<Text variant="body/small">{label}</Text>
-				<View className="flex flex-row items-baseline gap-1">
-					<Text variant="title/base">{displayValue}</Text>
-					<Text variant="body/small">{unit}</Text>
+				<Text variant='body/small'>{label}</Text>
+				<View className='flex flex-row items-baseline gap-1'>
+					<Text variant='title/base'>{displayValue}</Text>
+					<Text variant='body/small'>{unit}</Text>
 				</View>
 
 				{side && (

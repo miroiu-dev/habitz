@@ -51,3 +51,9 @@ export type User = {
 	email: string;
 	fullName: string;
 };
+
+export type Duration = {
+	hours: number;
+	minutes: number;
+	seconds: number;
+};

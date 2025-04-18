@@ -1,43 +1,59 @@
 import { HABIT_ICONS } from '@/constants';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import {
+	Controller,
+	type FieldValues,
+	type UseControllerProps
+} from 'react-hook-form';
 import { FlatList, Pressable } from 'react-native';
-import { Icon } from '../ui';
+import { View } from 'react-native';
+import { FormError, Icon } from '../ui';
 
-type IconPickerProps = {
-	icons?: Icon[];
-	onIconChange?: (icon: Icon) => void;
-};
+type IconPickerProps<TFieldValues extends FieldValues = FieldValues> = {
+	icons?: readonly Icon[];
+} & UseControllerProps<TFieldValues>;
 
-export function IconPicker({
+export function IconPicker<TFieldValues extends FieldValues = FieldValues>({
 	icons = HABIT_ICONS,
-	onIconChange
-}: IconPickerProps) {
-	const [selectedIcon, setSelectedIcon] = useState<Icon | null>(null);
-
+	control,
+	name,
+	...props
+}: IconPickerProps<TFieldValues>) {
 	return (
-		<FlatList
-			horizontal
-			showsHorizontalScrollIndicator={false}
-			bounces={false}
-			contentContainerClassName='gap-4'
-			overScrollMode='never'
-			data={icons}
-			keyExtractor={item => item}
-			renderItem={({ item }) => (
-				<Pressable
-					onPress={() => {
-						setSelectedIcon(item);
-						onIconChange?.(item);
-					}}
-					className={cn(
-						'size-12 bg-primary-1 flex justify-center items-center rounded-lg',
-						selectedIcon === item && 'border-2 bg-primary-10'
-					)}
-				>
-					<Icon type={item} />
-				</Pressable>
+		<Controller
+			control={control}
+			name={name}
+			render={({
+				field: { value, onChange, onBlur, disabled },
+				fieldState: { error, invalid }
+			}) => (
+				<View className='gap-1'>
+					<FlatList
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						bounces={false}
+						contentContainerClassName='gap-4'
+						overScrollMode='never'
+						data={icons}
+						keyExtractor={item => item}
+						renderItem={({ item }) => (
+							<Pressable
+								disabled={disabled}
+								onPress={() => onChange(item)}
+								onBlur={onBlur}
+								className={cn(
+									'size-12 bg-primary-1 flex justify-center items-center rounded-lg',
+									value === item && 'border-2 bg-primary-10'
+								)}
+							>
+								<Icon type={item} />
+							</Pressable>
+						)}
+					/>
+					{invalid && <FormError error={error?.message} />}
+				</View>
 			)}
+			{...props}
 		/>
 	);
 }

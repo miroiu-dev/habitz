@@ -37,7 +37,6 @@ export async function signUp(payload: SignUpSchema) {
 export async function getUser() {
 	try {
 		const response = await httpClient.get<User>('users/me');
-		throw new QueryError('test', 'test description');
 
 		return await response.json();
 	} catch (error) {

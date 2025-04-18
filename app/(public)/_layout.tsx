@@ -1,5 +1,4 @@
 import { Header } from '@/components/router';
-import { Text } from '@/components/ui';
 import { useSession } from '@/providers/auth-context';
 import { Redirect, Stack } from 'expo-router';
 
@@ -7,7 +6,7 @@ export default function Layout() {
 	const { session, isLoading, signupFlow } = useSession();
 
 	if (isLoading) {
-		return <Text>Loading...</Text>;
+		return <Redirect href='/(loading)/session-loading' />;
 	}
 
 	if (session && !signupFlow) {

@@ -1,12 +1,20 @@
-import { Container, Icon, Text } from '@/components/ui';
+import { Container, GlobalError, Icon, Skeleton, Text } from '@/components/ui';
+import { useHistory } from '@/lib/queries';
+import { CellStatus } from '@/lib/services/habitService';
 import { getHistoryDate } from '@/lib/time';
 import { cn } from '@/lib/utils';
 import { Link } from 'expo-router';
 import type { PropsWithChildren } from 'react';
-import { ScrollView, View } from 'react-native';
+import {
+	Dimensions,
+	Pressable,
+	ScrollView,
+	TouchableOpacity,
+	View
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-function Header({ children }: PropsWithChildren) {
+function HeaderRow({ children }: PropsWithChildren) {
 	return (
 		<View className='flex flex-row border-b border-t border-dashed'>
 			{children}
@@ -41,14 +49,23 @@ function Cell({ children, className }: CellProps) {
 
 type IconCellProps = {
 	type: Icon;
+	id: number;
 };
 
-function IconCell({ type }: IconCellProps) {
+function IconCell({ type, id }: IconCellProps) {
 	return (
-		<Link href='/(auth)/(habit)/habit'>
-			<Cell className='bg-primary-1'>
-				<Icon type={type} />
-			</Cell>
+		<Link
+			href={{
+				pathname: '/habit/[id]',
+				params: { id }
+			}}
+			asChild
+		>
+			<Pressable className='bg-primary-1 active:bg-primary-10'>
+				<Cell>
+					<Icon type={type} width={24} height={24} />
+				</Cell>
+			</Pressable>
 		</Link>
 	);
 }
@@ -86,187 +103,95 @@ function CompleteCell({ color }: CompleteCellProps) {
 	);
 }
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
 export default function History() {
+	const { data, isPending, error, isError, refetch } = useHistory();
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<Container>
 				<Text variant='title/xlarge' className='mb-6'>
 					History
 				</Text>
-				<Text className='mb-4'>{getHistoryDate()}</Text>
-				<ScrollView
-					contentContainerStyle={{
-						minHeight: '100%',
-						paddingBottom: 200
-					}}
-					overScrollMode='never'
-					showsVerticalScrollIndicator={false}
-					bounces={false}
-				>
+				{data && (
+					<Text className='mb-4'>{getHistoryDate(data.date)}</Text>
+				)}
+				{isPending && (
+					<View className='gap-4'>
+						<Skeleton width={80} height={16} />
+						<Skeleton width={SCREEN_WIDTH - 48} height={480} />
+					</View>
+				)}
+				{isError && error && (
+					<GlobalError error={error} refetch={refetch} />
+				)}
+				{!isError && data && (
 					<ScrollView
-						horizontal
+						contentContainerStyle={{
+							minHeight: '100%',
+							paddingBottom: 200
+						}}
 						overScrollMode='never'
-						showsHorizontalScrollIndicator={false}
+						showsVerticalScrollIndicator={false}
 						bounces={false}
 					>
-						<View>
-							<Header>
-								<Cell />
-								<IconCell type='bed' />
-								<IconCell type='run' />
-								<IconCell type='palette' />
-								<Cell />
-								<Cell />
-								<Cell />
-								<Cell />
-							</Header>
-							<Row>
-								<DayCell day={15} />
-								<CompleteCell color='blue' />
+						<ScrollView
+							horizontal
+							overScrollMode='never'
+							showsHorizontalScrollIndicator={false}
+							bounces={false}
+						>
+							<View>
+								<HeaderRow>
+									{data.header.map((cell, i) =>
+										cell.icon && cell.id ? (
+											<IconCell
+												key={i}
+												id={cell.id}
+												type={cell.icon}
+											/>
+										) : (
+											<Cell key={i} />
+										)
+									)}
+								</HeaderRow>
 
-								<CompleteCell color='red' />
-								<IncompleteCell />
+								{data.rows.map((row, rowIndex) => (
+									<Row key={rowIndex}>
+										<DayCell day={row.day} />
+										{row.cells.map((cell, cellIndex) => {
+											if (
+												cell.status ===
+												CellStatus.Complete
+											) {
+												return (
+													<CompleteCell
+														key={cellIndex}
+														color={cell.color}
+													/>
+												);
+											}
 
-								<Cell />
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={14} />
-								<IncompleteCell />
-								<IncompleteCell />
+											if (
+												cell.status ===
+												CellStatus.Incomplete
+											) {
+												return (
+													<IncompleteCell
+														key={cellIndex}
+													/>
+												);
+											}
 
-								<CompleteCell color='purple' />
-
-								<Cell />
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={13} />
-								<IncompleteCell />
-
-								<CompleteCell color='green' />
-								<CompleteCell color='purple' />
-
-								<Cell />
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={12} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={11} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={10} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={9} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={8} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={7} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={6} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={5} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-							<Row>
-								<DayCell day={4} />
-								<IncompleteCell />
-
-								<CompleteCell color='red' />
-								<IncompleteCell />
-								<Cell />
-
-								<Cell />
-								<Cell />
-								<Cell />
-							</Row>
-						</View>
+											return <Cell key={cellIndex} />;
+										})}
+									</Row>
+								))}
+							</View>
+						</ScrollView>
 					</ScrollView>
-				</ScrollView>
+				)}
 			</Container>
 		</SafeAreaView>
 	);

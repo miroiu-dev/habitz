@@ -1,9 +1,8 @@
-import type { ReminderData } from '@/components/new-habit/reminder';
 import { MUSCLE_MAP } from '@/constants';
 import { type ClassValue, clsx } from 'clsx';
 import { HTTPError } from 'ky';
 import { twMerge } from 'tailwind-merge';
-import type { ApiError, ErrorResponse, Muscle } from './types';
+import type { ApiError, Duration, ErrorResponse, Muscle } from './types';
 
 export function cn(...classNames: ClassValue[]) {
 	return twMerge(clsx(classNames));
@@ -91,14 +90,13 @@ export function getWaistHipRatioText(waistHipRatio: string) {
 	return 'High';
 }
 
-export function formatReminder(reminder: ReminderData) {
+export function formatReminder(reminder: Duration) {
 	return `${reminder.hours.toString().padStart(2, '0')}:${reminder.minutes.toString().padStart(2, '0')}`;
 }
 
 export async function formatError(error: unknown): Promise<ApiError> {
 	if (error instanceof HTTPError) {
 		const response = await error.response.json<ErrorResponse>();
-		console.error(response);
 
 		if (response) {
 			const validationError = response?.errors?.[0].description;

@@ -11,6 +11,7 @@ type ToastParams = {
 	topOffset?: number;
 	bottomOffset?: number;
 	swipable?: boolean;
+	visibilityTime?: number;
 };
 
 export const toastConfig: ToastConfig = {
@@ -26,7 +27,7 @@ function danger(params: ToastParams) {
 		autoHide: params.autoHide ?? true,
 		type: 'error',
 		swipeable: params.swipable ?? false,
-		visibilityTime: 4000,
+		visibilityTime: params.visibilityTime ?? 4000,
 		topOffset: params.topOffset ?? 48,
 		bottomOffset: params.bottomOffset ?? 48,
 		props: {
@@ -44,7 +45,7 @@ function success(params: ToastParams) {
 		autoHide: params.autoHide ?? true,
 		type: 'success',
 		swipeable: params.swipable ?? false,
-		visibilityTime: 4000,
+		visibilityTime: params.visibilityTime ?? 4000,
 		topOffset: params.topOffset ?? 48,
 		bottomOffset: params.bottomOffset ?? 48,
 		props: {

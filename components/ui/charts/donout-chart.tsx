@@ -4,7 +4,7 @@ import Animated, {
 	useAnimatedProps,
 	useSharedValue,
 	withDelay,
-	withTiming,
+	withTiming
 } from 'react-native-reanimated';
 import Svg, { Circle, G } from 'react-native-svg';
 
@@ -30,7 +30,7 @@ export function DonutChart({
 	delay = 500,
 	max = 100,
 	fill = 'transparent',
-	children,
+	children
 }: PropsWithChildren<DonutChartProps>) {
 	const halfCircle = radius + strokeWidth;
 	const circleCircumference = 2 * Math.PI * radius;
@@ -44,7 +44,7 @@ export function DonutChart({
 			circleCircumference - (circleCircumference * maxPercentage) / 100;
 
 		return {
-			strokeDashoffset,
+			strokeDashoffset
 		};
 	});
 
@@ -52,7 +52,7 @@ export function DonutChart({
 		progress.value = withDelay(
 			delay,
 			withTiming(percentage, {
-				duration,
+				duration
 			})
 		);
 	}, [percentage, duration, delay, progress]);
@@ -64,10 +64,10 @@ export function DonutChart({
 			viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
 			style={{ position: 'relative' }}
 		>
-			<G rotation="-90" origin={`${halfCircle}, ${halfCircle}`}>
+			<G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
 				<Circle
-					cy="50%"
-					cx="50%"
+					cy='50%'
+					cx='50%'
 					stroke={color}
 					strokeWidth={strokeWidth}
 					r={radius}
@@ -75,15 +75,15 @@ export function DonutChart({
 					strokeOpacity={0.2}
 				/>
 				<AnimatedCircle
-					cy="50%"
-					cx="50%"
+					cy='50%'
+					cx='50%'
 					stroke={color}
 					strokeWidth={strokeWidth}
 					r={radius}
-					fill="transparent"
+					fill='transparent'
 					strokeDasharray={circleCircumference}
 					strokeDashoffset={circleCircumference}
-					strokeLinecap="round"
+					strokeLinecap='round'
 					animatedProps={animatedProps}
 				/>
 			</G>

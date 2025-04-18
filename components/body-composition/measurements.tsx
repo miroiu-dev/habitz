@@ -1,4 +1,4 @@
-import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
+import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
 import type { Muscle } from '@/lib/types';
 import { InteractionManager, View } from 'react-native';
 import { HumanBody } from './human-body';

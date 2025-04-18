@@ -48,7 +48,6 @@ class TokenManager {
 
 	subscribe(callback: TokenCallback) {
 		this.listeners.add(callback);
-		callback(this.currentTokens);
 
 		return () => {
 			this.listeners.delete(callback);

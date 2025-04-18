@@ -1,6 +1,6 @@
 import { toast } from '@/lib/toast';
 import { router } from 'expo-router';
-import ky, { HTTPError } from 'ky';
+import ky from 'ky';
 import { tokenManager } from './auth';
 import type { AuthenticationResponse } from './types';
 
@@ -8,26 +8,23 @@ export const httpClient = ky.create({
 	prefixUrl: process.env.EXPO_PUBLIC_API_URL,
 	timeout:
 		process.env.EXPO_PUBLIC_ENVIRONMENT === 'debug' ? 2147483647 : 10000,
+	retry: {
+		limit: 0
+	},
 	hooks: {
 		beforeRequest: [
 			async request => {
 				const accessToken = await tokenManager.getAccessToken();
-
 				request.headers.set('Authorization', `Bearer ${accessToken}`);
 			}
 		],
-		beforeRetry: [
-			async ({ request, options, error, retryCount }) => {
-				if (
-					!(
-						error instanceof HTTPError &&
-						error.response.status === 401
-					)
-				) {
-					return;
+		afterResponse: [
+			async (request, options, response) => {
+				if (response.status !== 401) {
+					return response;
 				}
 
-				const refreshEndpoint = '/users/refresh-token';
+				const refreshEndpoint = 'users/refresh-token';
 				const requestUrl = new URL(request.url);
 
 				if (requestUrl.pathname.endsWith(refreshEndpoint)) {
@@ -44,12 +41,8 @@ export const httpClient = ky.create({
 					await tokenManager.clearTokens();
 					router.push('/(public)');
 
-					return ky.stop;
+					return response;
 				}
-
-				console.log(
-					`Attempting to refresh token (Retry #${retryCount + 1})...`
-				);
 
 				const oldRefreshToken = await tokenManager.getRefreshToken();
 
@@ -57,7 +50,6 @@ export const httpClient = ky.create({
 					console.error(
 						'No refresh token found. Cannot refresh session.'
 					);
-
 					toast.danger({
 						title: 'Session expired',
 						description: 'Please sign in again',
@@ -65,7 +57,7 @@ export const httpClient = ky.create({
 					});
 					router.push('/(public)');
 
-					return ky.stop;
+					return response;
 				}
 
 				try {
@@ -73,7 +65,7 @@ export const httpClient = ky.create({
 						accessToken: newAccessToken,
 						refreshToken: newRefreshToken
 					} = await ky
-						.post<AuthenticationResponse>(refreshEndpoint, {
+						.post(refreshEndpoint, {
 							hooks: {},
 							prefixUrl: options.prefixUrl,
 							json: {
@@ -81,32 +73,32 @@ export const httpClient = ky.create({
 							},
 							retry: 0
 						})
-						.json();
+						.json<AuthenticationResponse>();
 
 					await tokenManager.setTokens(
 						newAccessToken,
 						newRefreshToken
 					);
-					console.log('Token refreshed successfully.');
 
-					request.headers.set(
+					const newOptions = { ...options };
+					newOptions.headers = new Headers(options.headers);
+					newOptions.headers.set(
 						'Authorization',
 						`Bearer ${newAccessToken}`
 					);
+
+					return ky(request.url, newOptions);
 				} catch (refreshError) {
 					console.error('Failed to refresh token:', refreshError);
 					await tokenManager.clearTokens();
-
 					toast.danger({
 						title: 'Session Error',
 						description:
 							'Could not refresh your session. Please sign in again.',
 						autoHide: true
 					});
-
 					router.push('/(public)');
-
-					return ky.stop;
+					return response;
 				}
 			}
 		]

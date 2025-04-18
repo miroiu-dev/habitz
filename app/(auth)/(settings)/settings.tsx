@@ -1,15 +1,13 @@
 import {
 	Button,
 	Container,
-	Icon,
+	GlobalError,
 	Skeleton,
 	Spacer,
-	Text,
-	Toast
+	Text
 } from '@/components/ui';
 import { ColorsLight } from '@/constants/Colors';
-import { useUser } from '@/lib/queries/useUser';
-import { isError } from '@/lib/type-guards';
+import { useUser } from '@/lib/queries';
 import { useSession } from '@/providers/auth-context';
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
@@ -29,9 +27,9 @@ export default function Settings() {
 
 	return (
 		<SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
-			<Container className='flex-1'>
-				{isError && (
-					
+			<Container className='flex-1 relatives'>
+				{isError && error && (
+					<GlobalError error={error} refetch={refetch} />
 				)}
 				<View className='justify-center items-center'>
 					{isPending && (

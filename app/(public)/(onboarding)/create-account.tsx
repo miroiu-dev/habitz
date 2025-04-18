@@ -5,7 +5,7 @@ import {
 	type CreateAccountSchema,
 	createAccountSchema
 } from '@/lib/schemas/auth';
-import { useOnboardingStore } from '@/lib/store/onboarding-store';
+import { useOnboardingStore } from '@/lib/store/onboardingStore';
 import { useSession } from '@/providers/auth-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type SubmitHandler, useForm } from 'react-hook-form';

@@ -1,4 +1,4 @@
-import { useBodyCompositionStore } from '@/lib/store/body-composition-store';
+import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
 

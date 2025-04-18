@@ -9,7 +9,7 @@ import {
 import { FormNumberInput } from '@/components/ui/form/form-number-input';
 import { useFormNavigation } from '@/hooks';
 import { type WelcomeSchema, welcomeSchema } from '@/lib/schemas/auth';
-import { useOnboardingStore } from '@/lib/store/onboarding-store';
+import { useOnboardingStore } from '@/lib/store/onboardingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { type SubmitHandler, useForm } from 'react-hook-form';

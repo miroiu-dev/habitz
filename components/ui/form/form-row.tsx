@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { Text } from '../text';
+import { FormError } from './form-error';
 
 type FormInputProps = PropsWithChildren<{
 	label?: string;
@@ -10,14 +11,10 @@ type FormInputProps = PropsWithChildren<{
 
 export function FormRow({ label, invalid, error, children }: FormInputProps) {
 	return (
-		<View className="flex flex-col gap-1">
-			{label && <Text variant="body/medium">{label}</Text>}
+		<View className='flex flex-col gap-1'>
+			{label && <Text variant='body/medium'>{label}</Text>}
 			{children}
-			{invalid && (
-				<Text variant="body/small" className="text-danger">
-					{error}
-				</Text>
-			)}
+			{invalid && <FormError error={error} />}
 		</View>
 	);
 }

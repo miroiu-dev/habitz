@@ -1,40 +1,55 @@
 import { HABIT_COLORS } from '@/constants';
-import { useState } from 'react';
-import { FlatList, Pressable } from 'react-native';
-import { Icon } from '../ui';
+import {
+	Controller,
+	type FieldValues,
+	type UseControllerProps
+} from 'react-hook-form';
+import { FlatList, Pressable, View } from 'react-native';
+import { FormError, Icon } from '../ui';
 
-type ColorPickerProps = {
-	colors?: string[];
-	onColorChange?: (color: string) => void;
-};
+type ColorPickerProps<TFieldValues extends FieldValues = FieldValues> = {
+	colors?: readonly string[];
+} & UseControllerProps<TFieldValues>;
 
-export function ColorPicker({
+export function ColorPicker<TFieldValues extends FieldValues = FieldValues>({
 	colors = HABIT_COLORS,
-	onColorChange
-}: ColorPickerProps) {
-	const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
+	control,
+	name,
+	...props
+}: ColorPickerProps<TFieldValues>) {
 	return (
-		<FlatList
-			horizontal
-			showsHorizontalScrollIndicator={false}
-			bounces={false}
-			overScrollMode='never'
-			contentContainerClassName='gap-4'
-			data={colors}
-			keyExtractor={item => item}
-			renderItem={({ item }) => (
-				<Pressable
-					onPress={() => {
-						setSelectedColor(item);
-						onColorChange?.(item);
-					}}
-					className='size-10 rounded-full flex justify-center items-center'
-					style={{ backgroundColor: item }}
-				>
-					{item === selectedColor && <Icon type='checkCircle' />}
-				</Pressable>
+		<Controller
+			control={control}
+			name={name}
+			render={({
+				field: { onBlur, onChange, value, disabled },
+				fieldState: { invalid, error }
+			}) => (
+				<View className='gap-1'>
+					<FlatList
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						bounces={false}
+						overScrollMode='never'
+						contentContainerClassName='gap-4'
+						data={colors}
+						keyExtractor={item => item}
+						renderItem={({ item }) => (
+							<Pressable
+								disabled={disabled}
+								onBlur={onBlur}
+								onPress={() => onChange(item)}
+								className='size-10 rounded-full flex justify-center items-center'
+								style={{ backgroundColor: item }}
+							>
+								{item === value && <Icon type='checkCircle' />}
+							</Pressable>
+						)}
+					/>
+					{invalid && <FormError error={error?.message} />}
+				</View>
 			)}
+			{...props}
 		/>
 	);
 }

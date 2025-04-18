@@ -1,9 +1,9 @@
 import { useStorageState } from '@/hooks/useStorageState';
 import { tokenManager } from '@/lib/auth';
 import type { SignInSchema, SignUpSchema } from '@/lib/schemas/auth';
-import { signIn, signUp } from '@/lib/services/auth-service';
+import { signIn, signUp } from '@/lib/services/authService';
 import { toast } from '@/lib/toast';
-import { isError } from '@/lib/type-guards';
+import { isError } from '@/lib/typeGuards';
 import { useRouter } from 'expo-router';
 import {
 	type PropsWithChildren,
@@ -43,6 +43,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 		useStorageState('signupFlow');
 	const router = useRouter();
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: setters are stable values
 	useEffect(() => {
 		const unsubscribe = tokenManager.subscribe(
 			({ accessToken, refreshToken }) => {
@@ -52,7 +53,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
 		);
 
 		return () => unsubscribe();
-	}, [setAccessToken, setRefreshToken]);
+	}, []);
+
+	console.log();
 
 	const session = accessToken && refreshToken;
 	const isLoading =
@@ -76,7 +79,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 					setAccessToken(response.accessToken);
 					setRefreshToken(response.refreshToken);
 
-					tokenManager.setTokens(
+					await tokenManager.setTokens(
 						response.accessToken,
 						response.refreshToken
 					);
@@ -98,7 +101,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 					setAccessToken(response.accessToken);
 					setRefreshToken(response.refreshToken);
 
-					tokenManager.setTokens(
+					await tokenManager.setTokens(
 						response.accessToken,
 						response.refreshToken
 					);

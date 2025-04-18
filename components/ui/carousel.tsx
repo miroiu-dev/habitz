@@ -6,9 +6,8 @@ import Animated, {
 	clamp,
 	useAnimatedStyle,
 	useSharedValue,
-	withClamp,
 	withSpring,
-	type SharedValue,
+	type SharedValue
 } from 'react-native-reanimated';
 
 interface CarouselProps {
@@ -37,23 +36,23 @@ function PaginationDot({ activeIndex, index }: PaginationDotProps) {
 			width: isActive ? withSpring(24) : withSpring(8),
 			backgroundColor: isActive
 				? ColorsLight.primary[20]
-				: ColorsLight.primary[5],
+				: ColorsLight.primary[5]
 		};
 	});
 
-	return <Animated.View className="h-2 rounded" style={animatedStyles} />;
+	return <Animated.View className='h-2 rounded' style={animatedStyles} />;
 }
 
 function Pagination({
 	itemsCount,
 	showPagination,
-	activeIndex,
+	activeIndex
 }: PaginationProps) {
 	if (!showPagination) return null;
 
 	const dots = new Array(itemsCount).fill(0);
 	return (
-		<View className="flex flex-row justify-center items-center py-4 gap-2">
+		<View className='flex flex-row justify-center items-center py-4 gap-2'>
 			{dots.map((_, index) => (
 				<PaginationDot
 					key={index}
@@ -71,7 +70,7 @@ const MARGIN = 24;
 export function Carousel({
 	children,
 	showPagination = true,
-	swipeTreshold = 100,
+	swipeTreshold = 100
 }: CarouselProps) {
 	const itemWidth = SCREEN_WIDTH - 2 * MARGIN;
 	const translateX = useSharedValue(0);
@@ -90,7 +89,7 @@ export function Carousel({
 
 		translateX.value = withSpring(snapPoint, {
 			damping: 25,
-			stiffness: 100,
+			stiffness: 100
 		});
 
 		activeIndex.value = index;
@@ -133,20 +132,20 @@ export function Carousel({
 
 	const animatedStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ translateX: translateX.value }],
+			transform: [{ translateX: translateX.value }]
 		};
 	});
 
 	return (
 		<GestureDetector gesture={pan}>
-			<View className="flex flex-col">
-				<Animated.View className="flex flex-row" style={animatedStyle}>
+			<View className='flex flex-col'>
+				<Animated.View className='flex flex-row' style={animatedStyle}>
 					{Children.map(children, child => (
 						<View
-							className="min-h-64"
+							className='min-h-64'
 							style={{
 								width: itemWidth,
-								marginRight: MARGIN,
+								marginRight: MARGIN
 							}}
 						>
 							{child}

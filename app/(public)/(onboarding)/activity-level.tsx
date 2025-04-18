@@ -10,7 +10,7 @@ import {
 	Goal,
 	activityLevelSchema
 } from '@/lib/schemas/auth';
-import { useOnboardingStore } from '@/lib/store/onboarding-store';
+import { useOnboardingStore } from '@/lib/store/onboardingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { type SubmitHandler, useForm } from 'react-hook-form';

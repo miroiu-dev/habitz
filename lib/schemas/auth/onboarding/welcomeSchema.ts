@@ -11,7 +11,7 @@ export const welcomeSchema = z.object({
 		.nonempty('Please enter your full name.')
 		.regex(/^[a-zA-Z\s'-]+$/, {
 			message:
-				'Full name can only contain letters, spaces, apostrophes, or hyphens'
+				'Full name can only contain letters, spaces, apostrophes, or hyphens.'
 		}),
 	gender: z.nativeEnum(Gender, {
 		message: 'Please select a gender!'
