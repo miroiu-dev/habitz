@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "habitz",
-    "slug": "habitz",
+    "name": "Habitz",
+    "slug": "Habitz",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "useNextNotificationsApi": true,
+      "networkSecurityConfig": "./network_security_config.xml",
       "permissions": ["NOTIFICATIONS"],
       "googleServicesFile": "./google-services.json",
       "package": "com.anonymous.habitz",
