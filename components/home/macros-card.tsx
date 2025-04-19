@@ -37,13 +37,13 @@ export function MacrosCard({
 				<View className='flex items-center'>
 					<Text variant='title/medium'>Protein</Text>
 					<NutritionChart
-						radius={48}
+						radius={42}
 						value={protein.toFixed(0)}
 						text={`/${totalMacros.toFixed(0)}g`}
 						percentage={proteinPercentage}
 						color={ColorsLight.blue[30]}
 					/>
-					<View className='flex items-center'>
+					<View className='flex items-center mt-2'>
 						<Text>Goal</Text>
 						<View className='flex flex-row items-center gap-1'>
 							<Icon type='fire' width={16} height={16} />
@@ -55,13 +55,13 @@ export function MacrosCard({
 				<View className='flex items-center'>
 					<Text variant='title/medium'>Fats</Text>
 					<NutritionChart
-						radius={48}
+						radius={42}
 						value={fats.toFixed(0)}
 						text={`/${totalMacros.toFixed(0)}g`}
 						percentage={fatPercentage}
 						color={ColorsLight.orange}
 					/>
-					<View className='flex items-center'>
+					<View className='flex items-center mt-2'>
 						<Text>BMR</Text>
 						<View className='flex flex-row items-center gap-1'>
 							<Icon type='bmr' width={16} height={16} />
@@ -72,13 +72,13 @@ export function MacrosCard({
 				<View className='flex items-center'>
 					<Text variant='title/medium'>Carbs</Text>
 					<NutritionChart
-						radius={48}
+						radius={42}
 						value={carbs.toFixed(0)}
 						text={`/${totalMacros.toFixed(0)}g`}
 						percentage={carbPercentage}
 						color={ColorsLight.green[50]}
 					/>
-					<View className='flex items-center'>
+					<View className='flex items-center mt-2'>
 						<Text>Exercise</Text>
 						<View className='flex flex-row items-center gap-1'>
 							<Icon type='exercise' width={16} height={16} />

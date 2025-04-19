@@ -15,7 +15,9 @@ export default function SessionLoading() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: router is a stable refrence
 	useEffect(() => {
 		if (!isLoading) {
-			if (session && !signupFlow) {
+			if (session && signupFlow) {
+				router.replace('/(public)/(onboarding)/account-created');
+			} else if (session && !signupFlow) {
 				router.replace('/(auth)/(tabs)');
 			} else if (!session) {
 				router.replace('/(public)');

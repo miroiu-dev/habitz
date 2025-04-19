@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect } from 'react';
 import {
+	type DimensionValue,
 	Dimensions,
 	type StyleProp,
 	StyleSheet,
@@ -18,8 +19,8 @@ import Animated, {
 const { width } = Dimensions.get('window');
 
 type SkeletonProps = {
-	width?: number;
-	height?: number;
+	width?: DimensionValue;
+	height?: DimensionValue;
 	borderRadius?: number;
 	backgroundColor?: string;
 	shimmerColors?: readonly [string, string, ...string[]];

@@ -39,7 +39,7 @@ export default function Habit() {
 		{ id: number }
 	>({
 		mutationFn: ({ id }) => deleteHabit(id),
-		onError: (err, variables, context) => {
+		onError: err => {
 			toast.danger({
 				title: err.title,
 				description: err.description
@@ -78,7 +78,7 @@ export default function Habit() {
 							className='relative'
 							style={{ marginTop: top }}
 						>
-							<View className='absolute -top-60 left-16'>
+							<View className='absolute -top-52 left-5'>
 								<CircleTop />
 							</View>
 							<View className='flex flex-row items-center justify-between'>

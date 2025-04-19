@@ -24,6 +24,9 @@ export default function ActivityLevel() {
 	const updateActivityLevel = useOnboardingStore(
 		state => state.updateActivityLevel
 	);
+	const updateWeeklyGoal = useOnboardingStore(
+		state => state.updateWeeklyGoal
+	);
 
 	const { control, handleSubmit } = useForm<ActivityLevelSchema>({
 		resolver: zodResolver(activityLevelSchema),
@@ -44,6 +47,7 @@ export default function ActivityLevel() {
 			return;
 		}
 
+		updateWeeklyGoal({ weeklyGoal: 0.25 });
 		push('/(public)/(onboarding)/weekly-goal');
 	};
 

@@ -6,12 +6,10 @@ import { Redirect, Stack } from 'expo-router';
 export default function Layout() {
 	useAppState();
 
-	const { session, isLoading, signupFlow } = useSession();
+	const { session, isLoading } = useSession();
 
-	1;
-
-	if (session && signupFlow) {
-		return <Redirect href='/(public)/(onboarding)/account-created' />;
+	if (isLoading) {
+		return <Redirect href='/session-loading' />;
 	}
 
 	if (!session && !isLoading) {

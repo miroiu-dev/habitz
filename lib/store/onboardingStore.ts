@@ -23,23 +23,29 @@ type OnboardingActions = {
 	updateActivityLevel: (data: ActivityLevelSchema) => void;
 	updateWeeklyGoal: (data: WeeklyGoalSchema) => void;
 	updateYou: (data: YouSchema) => void;
+	reset: () => void;
+};
+
+const initialState = {
+	age: Number.NaN,
+	activityLevel: ActivityLevel.active,
+	fullName: '',
+	gender: Gender.male,
+	goal: Goal.maintain,
+	goalWeight: Number.NaN,
+	height: Number.NaN,
+	weeklyGoal: Number.NaN,
+	weight: Number.NaN
 };
 
 export const useOnboardingStore = create<OnboardingData & OnboardingActions>(
 	set => ({
-		age: Number.NaN,
-		activityLevel: ActivityLevel.active,
-		fullName: '',
-		gender: Gender.male,
-		goal: Goal.maintain,
-		goalWeight: Number.NaN,
-		height: Number.NaN,
-		weeklyGoal: Number.NaN,
-		weight: Number.NaN,
+		...initialState,
 		updateWelcomeData: data => set(data),
 		updateActivityLevel: data => set(data),
 		updateGoal: data => set(data),
 		updateWeeklyGoal: data => set(data),
-		updateYou: data => set(data)
+		updateYou: data => set(data),
+		reset: () => set(initialState)
 	})
 );

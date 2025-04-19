@@ -2,8 +2,10 @@ import { useStorageState } from '@/hooks/useStorageState';
 import { tokenManager } from '@/lib/auth';
 import type { SignInSchema, SignUpSchema } from '@/lib/schemas/auth';
 import { signIn, signUp } from '@/lib/services/authService';
+import { useOnboardingStore } from '@/lib/store/onboardingStore';
 import { toast } from '@/lib/toast';
 import { isError } from '@/lib/typeGuards';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import {
 	type PropsWithChildren,
@@ -35,6 +37,8 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
+	const queryClient = useQueryClient();
+
 	const [[accessTokenLoading, accessToken], setAccessToken] =
 		useStorageState('accessToken');
 	const [[refreshTokenLoading, refreshToken], setRefreshToken] =
@@ -55,7 +59,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 		return () => unsubscribe();
 	}, []);
 
-	console.log();
+	const reset = useOnboardingStore(state => state.reset);
 
 	const session = accessToken && refreshToken;
 	const isLoading =
@@ -76,6 +80,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
 						return;
 					}
 
+					queryClient.clear();
+					reset();
 					setAccessToken(response.accessToken);
 					setRefreshToken(response.refreshToken);
 
@@ -84,7 +90,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 						response.refreshToken
 					);
 
-					router.replace('/(auth)/(tabs)');
+					router.replace('/session-loading');
 				},
 				signUp: async (data: SignUpSchema) => {
 					const response = await signUp(data);
@@ -98,6 +104,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
 						return;
 					}
 
+					queryClient.clear();
+					reset();
 					setAccessToken(response.accessToken);
 					setRefreshToken(response.refreshToken);
 
@@ -107,7 +115,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 					);
 
 					setSignupFlow('true');
-					router.replace('/(public)/(onboarding)/account-created');
+					router.replace('/session-loading');
 				},
 				signOut: () => {
 					setAccessToken(null);

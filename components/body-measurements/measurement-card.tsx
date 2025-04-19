@@ -40,7 +40,7 @@ export const MeasurementCard = memo(
 		return (
 			<Pressable
 				className={cn(
-					'relative flex gap-1 p-2 pr-6 rounded-lg bg-primary-1 overflow-hidden max-w-24 min-w-24',
+					'relative flex gap-1 p-2 rounded-lg bg-primary-1 overflow-hidden max-w-20 min-w-20',
 					isActive && 'bg-primary-20'
 				)}
 				onPress={event => {
@@ -51,7 +51,13 @@ export const MeasurementCard = memo(
 			>
 				<Text variant='body/small'>{label}</Text>
 				<View className='flex flex-row items-baseline gap-1'>
-					{isPending && <Skeleton height={16} width={48} />}
+					{isPending && (
+						<Skeleton
+							height={16}
+							width={32}
+							style={{ marginTop: 8 }}
+						/>
+					)}
 					{!isPending && (
 						<Text variant='title/base'>{displayValue}</Text>
 					)}

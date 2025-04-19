@@ -6,7 +6,7 @@ export default function Layout() {
 	const { session, isLoading, signupFlow } = useSession();
 
 	if (isLoading) {
-		return <Redirect href='/(loading)/session-loading' />;
+		return <Redirect href='/session-loading' />;
 	}
 
 	if (session && !signupFlow) {
