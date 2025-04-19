@@ -1,3 +1,4 @@
+import { ColorsLight } from '@/constants/Colors';
 import { DateTime } from 'luxon';
 
 export function getTimeOfDay() {
@@ -20,8 +21,8 @@ export function getToday() {
 	return DateTime.now().toFormat('dd MMMM, yyyy');
 }
 
-export function formatHistoryDate(date: Date) {
-	return DateTime.fromJSDate(date).toFormat('MMMM dd, yyyy HH:mm:ss');
+export function formatHistoryDate(date: string) {
+	return DateTime.fromISO(date).toFormat('MMMM dd, yyyy HH:mm:ss');
 }
 
 export function getHistoryDate(date: string) {
@@ -66,6 +67,31 @@ export function getMarkedDates(logs: string[]) {
 			{
 				selected: boolean;
 				disableTouchEvent: boolean;
+			}
+		>
+	);
+}
+
+export function getMarketDateLogs(logs: string[]) {
+	return logs.reduce(
+		(acc, date) => {
+			const formattedDate = DateTime.fromISO(date, {
+				zone: 'utc'
+			}).toFormat('yyyy-LL-dd');
+
+			acc[formattedDate] = {
+				selected: false,
+				marked: true,
+				dotColor: ColorsLight.primary[20]
+			};
+			return acc;
+		},
+		{} as Record<
+			string,
+			{
+				selected: boolean;
+				marked: boolean;
+				dotColor: string;
 			}
 		>
 	);

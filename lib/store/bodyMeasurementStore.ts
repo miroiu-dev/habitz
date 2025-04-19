@@ -1,12 +1,13 @@
 import { create } from 'zustand/react';
 import type { Muscle } from '../types';
 
-type BodyCompositionActions = {
+type BodyMeasurementActions = {
 	setSelectedMuscle: (muscle: Muscle | null) => void;
 	setMuscleMeasurement: (muscle: Muscle, value: number) => void;
+	setMuscleMeasurements: (measurements: Record<Muscle, number>) => void;
 };
 
-type BodyCompositionData = {
+type BodyMeasurementData = {
 	selectedMuscle: Muscle | null;
 	neck: number;
 	leftBiceps: number;
@@ -22,8 +23,8 @@ type BodyCompositionData = {
 	hip: number;
 };
 
-export const useBodyCompositionStore = create<
-	BodyCompositionData & BodyCompositionActions
+export const useBodyMeasurementStore = create<
+	BodyMeasurementData & BodyMeasurementActions
 >(set => ({
 	setSelectedMuscle: muscle => set({ selectedMuscle: muscle }),
 	selectedMuscle: null,
@@ -40,4 +41,6 @@ export const useBodyCompositionStore = create<
 	waist: 0,
 	hip: 0,
 	setMuscleMeasurement: (muscle, value) => set({ [muscle]: value }),
+	setMuscleMeasurements: (measurements: Record<Muscle, number>) =>
+		set({ ...measurements })
 }));

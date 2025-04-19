@@ -1,20 +1,20 @@
-import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
+import { useBodyMeasurementStore } from '@/lib/store/bodyMeasurementStore';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
 
 export function useMeasurement() {
 	const { dismiss } = useBottomSheetModal();
 
-	const selectedMuscle = useBodyCompositionStore(
+	const selectedMuscle = useBodyMeasurementStore(
 		state => state.selectedMuscle
 	);
-	const selectedMuscleInitialMeasurement = useBodyCompositionStore(
+	const selectedMuscleInitialMeasurement = useBodyMeasurementStore(
 		state => state[selectedMuscle as keyof typeof state] as number
 	);
-	const setSelectedMuscle = useBodyCompositionStore(
+	const setSelectedMuscle = useBodyMeasurementStore(
 		state => state.setSelectedMuscle
 	);
-	const setMuscleMeasurement = useBodyCompositionStore(
+	const setMuscleMeasurement = useBodyMeasurementStore(
 		state => state.setMuscleMeasurement
 	);
 

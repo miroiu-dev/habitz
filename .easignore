@@ -36,6 +36,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-habitz-notifications-firebase-adminsdk-fbsvc-f2fa6961ea.json
-google-services.json

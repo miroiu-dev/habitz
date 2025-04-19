@@ -39,7 +39,7 @@ export type RowData = {
 	day: number;
 	cells: Cell[];
 };
-export type GetStatisticsResponse = {
+export type GetHistoryResponse = {
 	date: string;
 	header: Header[];
 	rows: RowData[];
@@ -83,7 +83,7 @@ export async function createHabit(
 						? DateTime.fromObject({
 								hour: payload.reminder.hours,
 								minute: payload.reminder.minutes
-							}).toFormat('hh:mm')
+							}).toFormat('HH:mm')
 						: null
 			}
 		});
@@ -131,10 +131,10 @@ export async function logHabit(
 	}
 }
 
-export async function getStatistics(): Promise<GetStatisticsResponse> {
+export async function getHistory(): Promise<GetHistoryResponse> {
 	try {
 		const response =
-			await httpClient.get<GetStatisticsResponse>('habit-logs/history');
+			await httpClient.get<GetHistoryResponse>('habit-logs/history');
 		const data = await response.json();
 
 		return data;

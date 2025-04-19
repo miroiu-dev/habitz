@@ -30,7 +30,7 @@ type SkeletonProps = {
 export function Skeleton({
 	width: itemWidth = 200,
 	height = 20,
-	borderRadius = 4,
+	borderRadius = 8,
 	backgroundColor = '#e0e0e0',
 	shimmerColors = ['#ebebeb', '#f5f5f5', '#ebebeb'],
 	duration = 1500,

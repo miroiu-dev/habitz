@@ -10,6 +10,7 @@ import {
 } from '@/components/ui';
 import { ColorsLight } from '@/constants/Colors';
 import type { QueryError } from '@/lib/errors';
+import { cancelNotification, getIdentifier } from '@/lib/notifications';
 import { useHabit } from '@/lib/queries';
 import {
 	type LogHabitResponse,
@@ -45,6 +46,14 @@ export default function Habit() {
 			});
 		},
 		onSettled: async () => {
+			if (!data) return;
+
+			await Promise.all(
+				data.scheduleDays.map(dayOfWeek =>
+					cancelNotification(getIdentifier(data.name, dayOfWeek))
+				)
+			);
+
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: ['habit-logs'] }),
 				queryClient.invalidateQueries({

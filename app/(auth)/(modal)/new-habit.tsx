@@ -7,6 +7,7 @@ import {
 	SchedulePicker
 } from '@/components/new-habit';
 import { Button, Container, Text } from '@/components/ui';
+import { scheduleWeeklyNotification } from '@/lib/notifications';
 import {
 	type HabitSchema,
 	habitSchema
@@ -14,6 +15,7 @@ import {
 import { createHabit } from '@/lib/services/habitService';
 import { toast } from '@/lib/toast';
 import { isError } from '@/lib/typeGuards';
+import { getRandomMessage } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
@@ -58,12 +60,31 @@ export default function NewHabit() {
 			return;
 		}
 
+		if (values.reminder !== null) {
+			await Promise.all(
+				values.schedules.map(schedule =>
+					scheduleWeeklyNotification(
+						schedule,
+						values.reminder?.hours ?? 0,
+						values.reminder?.minutes ?? 0,
+						`Time for your habit - ${values.name}! 💪`,
+						getRandomMessage(),
+						values.name,
+						response.id
+					)
+				)
+			);
+		}
+
 		await Promise.all([
 			queryClient.invalidateQueries({
 				queryKey: ['habit-logs']
 			}),
 			queryClient.invalidateQueries({
 				queryKey: ['habit-logs/history']
+			}),
+			queryClient.invalidateQueries({
+				queryKey: ['notifications']
 			})
 		]);
 

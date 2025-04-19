@@ -1,4 +1,4 @@
-import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
+import { useBodyMeasurementStore } from '@/lib/store/bodyMeasurementStore';
 import type { Muscle } from '@/lib/types';
 import { InteractionManager, View } from 'react-native';
 import { HumanBody } from './human-body';
@@ -9,11 +9,11 @@ type MeasurementsProps = {
 };
 
 export function Measurements({ openBottomSheet }: MeasurementsProps) {
-	const selectedMuscle = useBodyCompositionStore(
+	const selectedMuscle = useBodyMeasurementStore(
 		state => state.selectedMuscle
 	);
 
-	const setSelectedMuscle = useBodyCompositionStore(
+	const setSelectedMuscle = useBodyMeasurementStore(
 		state => state.setSelectedMuscle
 	);
 

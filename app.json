@@ -16,6 +16,9 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "useNextNotificationsApi": true,
+      "permissions": ["NOTIFICATIONS"],
+      "googleServicesFile": "./google-services.json",
       "package": "com.anonymous.habitz",
       "softwareKeyboardLayoutMode": "pan"
     },

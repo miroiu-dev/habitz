@@ -1,6 +1,5 @@
 import { type Icon, Text } from '@/components/ui';
 import { ColorsLight } from '@/constants/Colors';
-import { formatReminder } from '@/lib/utils';
 import { DateTime } from 'luxon';
 import { useRef } from 'react';
 import { View } from 'react-native';

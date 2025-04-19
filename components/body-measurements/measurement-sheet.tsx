@@ -1,4 +1,4 @@
-import { useMeasurement } from '@/hooks/body-composition/useMeasurement';
+import { useMeasurement } from '@/hooks/body-measurement/useMeasurement';
 import { camelToFlat } from '@/lib/utils';
 import type {
 	BottomSheetProps,

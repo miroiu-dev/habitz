@@ -1,14 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import type { QueryError } from '../errors';
-import { type GetHistoryResponse, getHistory } from '../services/habitService';
+import {
+	type GetStatisticsResponse,
+	getStatistics
+} from '../services/statisticsService';
 
-export function useHistory() {
+export function useStatistics() {
 	const { isPending, data, error, isError, refetch } = useQuery<
-		GetHistoryResponse,
+		GetStatisticsResponse,
 		QueryError
 	>({
-		queryKey: ['habit-logs/history'],
-		queryFn: getHistory
+		queryKey: ['statistics'],
+		queryFn: getStatistics
 	});
 
 	return { isPending, isError, data, error, refetch };

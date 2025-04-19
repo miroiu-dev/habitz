@@ -1,7 +1,7 @@
+import { EmptyList } from '@/components/ui';
 import { useHabitLogs } from '@/lib/queries';
 import { View } from 'react-native';
 import { GlobalError, Text } from '../../ui';
-import { HabitListEmpty } from './habit-list-empty';
 import { HabitListItem } from './habit-list-item';
 import { HabitListItemSkeleton } from './habit-list-item-skeleton';
 
@@ -31,7 +31,12 @@ export function HabitList() {
 				</>
 			)}
 
-			{!isError && isEmpty && <HabitListEmpty />}
+			{!isError && isEmpty && (
+				<EmptyList
+					title='No habits found'
+					description='Start building your routine by adding your first habit.'
+				/>
+			)}
 			{!isError &&
 				!isEmpty &&
 				data?.map(habit => (

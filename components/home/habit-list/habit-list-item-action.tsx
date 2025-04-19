@@ -81,6 +81,8 @@ export function HabitListItemAction({
 			return { previousData };
 		},
 		onError: (err, variables, context) => {
+			close();
+
 			queryClient.setQueryData(
 				['habit-logs'],
 				context?.previousData ?? []
@@ -93,6 +95,7 @@ export function HabitListItemAction({
 		},
 		onSettled: async () => {
 			close();
+
 			await Promise.all([
 				queryClient.invalidateQueries({
 					queryKey: ['habits', habitId]

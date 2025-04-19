@@ -10,7 +10,8 @@ export const HABIT_ICONS: Icon[] = [
 	'home',
 	'location',
 	'palette',
-	'run'
+	'run',
+	'exercise'
 ] as const;
 
 export const HABIT_COLORS = [
@@ -33,7 +34,6 @@ export const HABIT_SCHEDULES = [
 	{ label: 'S', value: 6 }
 ] as const;
 
-
 export const MUSCLE_MAP = {
 	Neck: 'neck',
 	Shoulder: 'shoulder',
@@ -54,3 +54,13 @@ export const MUSCLE_MAP = {
 		R: 'rightCalf'
 	}
 } as const;
+
+export const MOTIVATIONAL_MESSAGES = [
+	"Keep your streak going – you're building a better you!",
+	'Small steps today lead to big results tomorrow.',
+	"You're crushing it! Keep going!",
+	'Discipline today, success tomorrow.',
+	'One step closer to your goal – don’t stop now!',
+	'Stay consistent, your future self will thank you.',
+	'Habit unlocked! Time to level up.'
+] as const;

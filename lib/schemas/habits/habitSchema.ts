@@ -3,11 +3,11 @@ import { z } from 'zod';
 export const habitSchema = z.object({
 	name: z
 		.string()
-		.min(3, 'Name must be at least 3 characters long.')
-		.max(20, 'Name must be at most 20 characters long.')
+		.min(3, 'Habit must be at least 3 characters long.')
+		.max(20, 'Habit must be at most 20 characters long.')
 		.regex(/^[a-zA-Z\s'-]+$/, {
 			message:
-				'Name can only contain letters, spaces, apostrophes, or hyphens.'
+				'Habit can only contain letters, spaces, apostrophes, or hyphens.'
 		}),
 	icon: z.string({
 		message: 'Please choose an icon.'

@@ -1,4 +1,4 @@
-import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
+import { useBodyMeasurementStore } from '@/lib/store/bodyMeasurementStore';
 import {
 	getWaistHipRatio,
 	getWaistHipRatioColor,
@@ -9,8 +9,8 @@ import { View } from 'react-native';
 import { Text } from '../ui';
 
 export function WaistHipRatioCard() {
-	const waist = useBodyCompositionStore(state => state.waist);
-	const hip = useBodyCompositionStore(state => state.hip);
+	const waist = useBodyMeasurementStore(state => state.waist);
+	const hip = useBodyMeasurementStore(state => state.hip);
 
 	const waistHipRatio = useMemo(
 		() => getWaistHipRatio(waist, hip),

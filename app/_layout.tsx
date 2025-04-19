@@ -16,6 +16,19 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
 import '../global.css';
 import '@/lib/polyfills';
+import '@/lib/reanimated-config';
+import { queryClient } from '@/lib/queryClient';
+import { NotificationProvider } from '@/providers/notification-context';
+import { QueryClientProvider } from '@tanstack/react-query';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+	handleNotification: async () => ({
+		shouldPlaySound: true,
+		shouldSetBadge: false,
+		shouldShowAlert: true
+	})
+});
 
 preventAutoHideAsync();
 
@@ -39,17 +52,21 @@ export default function RootLayout() {
 
 	return (
 		<GestureHandlerRootView>
-			<BottomSheetModalProvider>
-				<ThemeProvider value={LightTheme}>
-					<SystemBars style='dark' />
-					<KeyboardProvider>
-						<SessionProvider>
-							<Slot initialRouteName='(auth)' />
-						</SessionProvider>
-					</KeyboardProvider>
-					<Toast config={toastConfig} />
-				</ThemeProvider>
-			</BottomSheetModalProvider>
+			<QueryClientProvider client={queryClient}>
+				<NotificationProvider>
+					<BottomSheetModalProvider>
+						<ThemeProvider value={LightTheme}>
+							<SystemBars style='dark' />
+							<KeyboardProvider>
+								<SessionProvider>
+									<Slot initialRouteName='(auth)' />
+								</SessionProvider>
+							</KeyboardProvider>
+							<Toast config={toastConfig} />
+						</ThemeProvider>
+					</BottomSheetModalProvider>
+				</NotificationProvider>
+			</QueryClientProvider>
 		</GestureHandlerRootView>
 	);
 }

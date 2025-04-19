@@ -34,7 +34,7 @@ export const useOnboardingStore = create<OnboardingData & OnboardingActions>(
 		goal: Goal.maintain,
 		goalWeight: Number.NaN,
 		height: Number.NaN,
-		weeklyGoal: 0.25,
+		weeklyGoal: Number.NaN,
 		weight: Number.NaN,
 		updateWelcomeData: data => set(data),
 		updateActivityLevel: data => set(data),

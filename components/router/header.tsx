@@ -1,6 +1,5 @@
 import { getHeaderTitle } from '@react-navigation/elements';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton } from '../ui/icon-button';
 import { Text } from '../ui/text';

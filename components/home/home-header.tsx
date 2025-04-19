@@ -23,11 +23,13 @@ export function HomeHeader() {
 			</Link>
 			<Logo />
 
-			<TouchableOpacity>
-				<Badge>
-					<Icon type='bell' />
-				</Badge>
-			</TouchableOpacity>
+			<Link href='/(auth)/(notifications)/notifications' asChild>
+				<TouchableOpacity>
+					<Badge>
+						<Icon type='bell' />
+					</Badge>
+				</TouchableOpacity>
+			</Link>
 		</View>
 	);
 }

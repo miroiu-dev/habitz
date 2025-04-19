@@ -1,9 +1,10 @@
-import { useBodyCompositionStore } from '@/lib/store/bodyCompositionStore';
+import { useBodyMeasurementLog } from '@/lib/queries/useBodyMeasurementLog';
+import { useBodyMeasurementStore } from '@/lib/store/bodyMeasurementStore';
 import type { Muscle } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { memo, useMemo } from 'react';
 import { Pressable, type PressableProps, View } from 'react-native';
-import { Text } from '../ui';
+import { Skeleton, Text } from '../ui';
 import { EllipseCorner } from './ellipse-corner';
 
 type Side = 'L' | 'R';
@@ -28,7 +29,9 @@ export const MeasurementCard = memo(
 		isActive,
 		...props
 	}: MeasurementCard) => {
-		const value = useBodyCompositionStore(
+		const { isPending } = useBodyMeasurementLog();
+
+		const value = useBodyMeasurementStore(
 			state => state[muscle as keyof typeof state] as number
 		);
 
@@ -48,8 +51,11 @@ export const MeasurementCard = memo(
 			>
 				<Text variant='body/small'>{label}</Text>
 				<View className='flex flex-row items-baseline gap-1'>
-					<Text variant='title/base'>{displayValue}</Text>
-					<Text variant='body/small'>{unit}</Text>
+					{isPending && <Skeleton height={16} width={48} />}
+					{!isPending && (
+						<Text variant='title/base'>{displayValue}</Text>
+					)}
+					{!isPending && <Text variant='body/small'>{unit}</Text>}
 				</View>
 
 				{side && (

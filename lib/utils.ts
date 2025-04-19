@@ -1,4 +1,4 @@
-import { MUSCLE_MAP } from '@/constants';
+import { MOTIVATIONAL_MESSAGES, MUSCLE_MAP } from '@/constants';
 import { type ClassValue, clsx } from 'clsx';
 import { HTTPError } from 'ky';
 import { twMerge } from 'tailwind-merge';
@@ -122,4 +122,10 @@ export async function formatError(error: unknown): Promise<ApiError> {
 		title: otherError.name,
 		status: 500
 	};
+}
+
+export function getRandomMessage() {
+	return MOTIVATIONAL_MESSAGES[
+		Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length)
+	];
 }
