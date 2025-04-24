@@ -26,7 +26,7 @@ export default function SessionLoading() {
 	}, [isLoading, session, signupFlow]);
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView edges={['top', 'bottom']}>
 			<Container className='gap-2'>
 				<Text variant='title/xlarge' className='text-center'>
 					Almost there
