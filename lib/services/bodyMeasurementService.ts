@@ -19,7 +19,8 @@ export type GetBodyMeasurementLogResponse = {
 };
 
 export type GetBodyMeasurementLogsResponse = {
-	data: BodyMeasurementLog[];
+	measurements: BodyMeasurementLog[];
+	availableDates: string[];
 };
 
 export type BodyMeasurementLog = {
@@ -40,13 +41,13 @@ export type DeleteBodyMeasurementLogResponse = {
 
 export async function getBodyMeasurementLogs(
 	date: string
-): Promise<BodyMeasurementLog[]> {
+): Promise<GetBodyMeasurementLogsResponse> {
 	try {
 		const response = await httpClient.get<GetBodyMeasurementLogsResponse>(
 			`body-measurement-logs?date=${date}`
 		);
 
-		const { data } = await response.json();
+		const data = await response.json();
 
 		return data;
 	} catch (error) {

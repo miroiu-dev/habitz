@@ -25,8 +25,9 @@ export default function History() {
 		useBodyMeasurementLogs(selectedDate);
 
 	const availableDates =
-		data?.map(x => DateTime.fromISO(x.createdAt).toFormat('yyyy-MM-dd')) ??
-		[];
+		data?.availableDates?.map(x =>
+			DateTime.fromISO(x).toFormat('yyyy-MM-dd')
+		) ?? [];
 
 	return (
 		<SafeAreaView edges={['bottom']}>
@@ -72,7 +73,7 @@ export default function History() {
 						)}
 						{!isPending && data && (
 							<View className='gap-4'>
-								{data.map(x => (
+								{data.measurements.map(x => (
 									<HistoryCard
 										key={x.id}
 										data={x}
