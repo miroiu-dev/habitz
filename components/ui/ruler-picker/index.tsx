@@ -38,6 +38,12 @@ export function RulerPicker({
 		return index * itemSize;
 	}, [initialValue, minValue, step]);
 
+	const initialNumToRender = useMemo(() => {
+		const value = Math.ceil((initialValue - minValue) / step) + 10;
+
+		return Math.max(value, 50);
+	}, [initialValue, minValue, step]);
+
 	const scrollX = useSharedValue(initialOffset);
 
 	const onScroll = useAnimatedScrollHandler({
@@ -93,7 +99,7 @@ export function RulerPicker({
 					onScroll={onScroll}
 					scrollEventThrottle={16}
 					removeClippedSubviews={false}
-					initialNumToRender={50}
+					initialNumToRender={initialNumToRender}
 					maxToRenderPerBatch={50}
 					windowSize={30}
 					contentOffset={{ x: initialOffset, y: 0 }}
